@@ -1,0 +1,28 @@
+[
+  {
+    "title_ru": "Главная",
+    "title_en": "Main",
+    "url_ru": "/",
+    "url_en": "/"
+  },
+  {
+    "title_ru": "Наш Приход",
+    "title_en": "Our Parish",
+    "url_en": "/our-parish"
+  },
+  {
+    "title_ru": "Новости",
+    "title_en": "News",
+    "url_en": "/news"
+  },
+  {
+    "title_ru": "Пожертвования",
+    "title_en": "Donations",
+    "url_en": "/donations"
+  },
+  {
+    "title_ru": "Ссылки",
+    "title_en": "Links",
+    "url_en": "/links"
+  }
+]
