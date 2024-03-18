@@ -7,10 +7,11 @@ import Link from "next/link";
 
 const MainPage = () => {
   const { language } = useLanguageStore();
+  const renderHTML = (html: any) => ({ __html: html });
   return (
     <div className="MAIN_PAGE_MAIN_CONTAINER flex flex-col gap-4">
       <h2 className="text-3xl font-semibold mb-8">
-        {language === "en" ? "Main Page" : "Главная страница"}
+        {language === "en" ? "Main Page" : "Главная Страница"}
       </h2>
       <div className="bg-gray-300 flex flex-col gap-4 p-8 rounded-md">
         <p className="font-bold">
@@ -37,10 +38,11 @@ const MainPage = () => {
         alt="Main Image One | Храм Покрова Пресвятой Богородицы | Holy Protection of the Mother of God Church"
         className="rounded-md p-1 border-2"
       />
-      <Link href="schedule">
-        <button className="bg-gray-500 hover:bg-gray-400 rounded-md text-white py-2 w-full font-bold">
-          {language === "en" ? "Schedule" : "Расписание"}
-        </button>
+      <Link
+        href="schedule"
+        className="bg-gray-500 hover:bg-gray-400 rounded-md text-white py-2 w-full font-bold text-center"
+      >
+        {language === "en" ? "Schedule" : "Расписание"}
       </Link>
     </div>
   );
