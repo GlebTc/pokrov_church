@@ -40,7 +40,7 @@ const MainPage = () => {
       />
       <Link
         href="schedule"
-        className="bg-gray-500 hover:bg-gray-400 rounded-md text-white py-2 w-full font-bold text-center"
+        className="bg-gray-500 hover:bg-gray-400 rounded-md text-white py-2 w-full font-bold text-center duration-300"
       >
         {language === "en" ? "Schedule" : "Расписание"}
       </Link>

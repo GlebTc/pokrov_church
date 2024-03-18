@@ -4,11 +4,23 @@ import nav_hero_image from "@/public/main_hero.webp";
 import menuItems from "@/src/app/utils/menuItems.json";
 import Link from "next/link";
 import { useLanguageStore } from "@/src/app/utils/languageStore";
+import { useState } from "react";
+import { IoMdMenu } from "react-icons/io";
 
 const Navbar = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const handleMobileMenu = () => {
+    setMobileMenu(!mobileMenu);
+  };
   const { language, toggleLanguage } = useLanguageStore();
   return (
-    <div className="NAVBAR_MAIN_CONTAINER bg-white rounded-t-md">
+    <div className="NAVBAR_MAIN_CONTAINER relative bg-white rounded-t-md">
+      <div
+        className="absolute top-4 right-4 bg-gray-500 text-white rounded-md p-1 shadow-md shadow-gray-400 md:hidden cursor-pointer hover:bg-gray-400 duration-300"
+        onClick={handleMobileMenu}
+      >
+        <IoMdMenu size={25} />
+      </div>
       <div className="NAVBAR_HEADER_CONTAINER p-12 flex justify-between items-center">
         <div className="NAVBAR_TITLE_CONTAINER">
           <h1 className="text-2xl font-semibold">
@@ -24,15 +36,16 @@ const Navbar = () => {
         </div>
         <div className="NAVBAR_LANGUAGE_BUTTON_CONTAINER fixed bottom-4 right-4 flex flex-col gap-2">
           <button
-            className="bg-gray-500 hover:bg-gray-400 min-w-[100px] py-1 rounded-md text-white"
+            className="bg-gray-500 hover:bg-gray-400 min-w-[100px] py-1 rounded-md text-white duration-300 shadow-md shadow-gray-400"
             onClick={toggleLanguage}
           >
             {language === "en" ? "Русский" : "English"}
           </button>
-          <Link href="/">
-            <button className="bg-gray-500 hover:bg-gray-400 min-w-[100px] py-1 rounded-md text-white px-2">
-              {language === "en" ? "Main Page" : "Главная страница"}
-            </button>
+          <Link
+            href="/"
+            className="bg-gray-500 hover:bg-gray-400 min-w-[100px] py-1 rounded-md text-white px-2 duration-300 shadow-md shadow-gray-400"
+          >
+            {language === "en" ? "Main Page" : "Главная страница"}
           </Link>
         </div>
       </div>

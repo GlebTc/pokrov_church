@@ -46,7 +46,7 @@ const Donations = () => {
       </div>
       <a
         href="https://www.canadahelps.org/en/dn/31808"
-        className="bg-gray-500 hover:bg-gray-400 rounded-md text-white py-2 w-full font-bold text-center"
+        className="button "
       >
         Donate
       </a>
