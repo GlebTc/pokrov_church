@@ -8,7 +8,7 @@ import Image from "next/image";
 const SideBar = () => {
   const { language } = useLanguageStore();
   return (
-    <div className="mt-4 p-2 flex flex-col items-center text-center gap-4">
+    <div className="flex flex-col items-center text-center gap-4">
       <h3>
         {language === "en" ? side_bar_content.en[0] : side_bar_content.ru[0]}
       </h3>
