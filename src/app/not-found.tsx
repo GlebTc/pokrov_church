@@ -1,4 +1,4 @@
-import React from 'react'
+import { useLanguageStore } from '@/src/app/utils/languageStore';
 
 const NotFound = () => {
   return (

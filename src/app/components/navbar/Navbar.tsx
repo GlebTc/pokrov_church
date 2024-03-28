@@ -14,13 +14,18 @@ const Navbar = () => {
     setMobileMenu(!mobileMenu);
   };
   const { language, toggleLanguage } = useLanguageStore();
+
+
   return (
     <div className='NAVBAR_MAIN_CONTAINER relative bg-white md:rounded-t-md'>
       <div
         className='absolute top-4 right-4 bg-gray-500 text-white rounded-md p-1 shadow-md shadow-gray-400 md:hidden cursor-pointer hover:bg-gray-400 duration-300'
         onClick={handleMobileMenu}
       >
-        <IoMdMenu size={25} />
+        <IoMdMenu
+          size={40}
+          className='text-white cursor-pointer'
+        />
       </div>
       <div className='NAVBAR_HEADER_CONTAINER p-12 flex justify-between items-center'>
         <div className='NAVBAR_TITLE_CONTAINER'>
@@ -38,7 +43,7 @@ const Navbar = () => {
 
         <div className='NAVBAR_BUTTONS_CONTAINER fixed bottom-4 right-4 flex flex-col gap-2'>
           <Link
-            href='/donations'
+            href='https://www.canadahelps.org/en/dn/31808'
             className='NAVBAR_SCHEDULE_BUTTON bg-blue-500 hover:bg-blue-400 min-w-[180px] py-1 rounded-md text-white px-2 duration-300 shadow-md shadow-gray-400 text-center animate-pulse font-bold'
           >
             {language === 'en' ? 'Donations' : 'Пожертвования'}
