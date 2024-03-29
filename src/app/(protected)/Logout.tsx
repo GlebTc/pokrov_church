@@ -1,26 +1,27 @@
 'use client';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-// import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
-const Logout = async () => {
+const Logout = () => {
   const supabase = createClientComponentClient();
   const router = useRouter();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/');
-    router.refresh();
+    try {
+      await supabase.auth.signOut();
+      router.push('/'); // Redirect to home page after sign out
+      router.refresh(); // Refresh the page
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
+
   return (
-    <div className={`${user ? 'block' : 'hidden'}`}>
+    <div>
       <button
         onClick={handleSignOut}
-        className='NAVBAR_MAIN_PAGE_BUTTON bg-red-500 hover:bg-red-400 min-w-[180px] py-1 rounded-md text-white px-2 duration-300 shadow-md shadow-gray-400 text-center'
+        className='NAVBAR_MAIN_PAGE_BUTTON bg-red-500 hover:bg-red-400 min-w-[100px] py-1 rounded-md text-white px-2 duration-300 shadow-md shadow-gray-400 text-center'
       >
         Log Out
       </button>

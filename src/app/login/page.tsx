@@ -4,27 +4,17 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
 import { useLanguageStore } from '@/src/app/utils/languageStore';
+import Logout from '../(protected)/Logout';
 
 const Login = () => {
-  const [email, setEmail] = useState(''); // webdevelopmenthamilton@gmail.com
-  const [password, setPassword] = useState(''); // webdev123
+  const [email, setEmail] = useState(''); // webdevelopmenthamilton@gmail.com | test@test.com
+  const [password, setPassword] = useState(''); // webdev123 | test123
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+
   const { language } = useLanguageStore();
 
   const supabase = createClientComponentClient();
   const router = useRouter();
-
-  useEffect(() => {
-    async function fetchUser() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
-    }
-    fetchUser();
-  }, []);
 
   const handleSignIn = async () => {
     await supabase.auth.signInWithPassword({
@@ -33,11 +23,10 @@ const Login = () => {
     });
     setEmail('');
     setPassword('');
+
     router.push('/archives');
     router.refresh();
   };
-
-  if (loading) return <div>Loading...</div>;
 
   if (user)
     return (
@@ -45,6 +34,7 @@ const Login = () => {
         {language === 'en'
           ? `You are signed in as ${user.email}`
           : `Вы зарегистрирован как ${user.email}`}
+        <Logout />
       </div>
     );
 

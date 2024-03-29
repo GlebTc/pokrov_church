@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import SideBar from "./components/sideBar/SideBar";
+import LogInLogoutButton from "./components/navbar/LogInLogoutButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <div>
           <Navbar />
           <div className="w-full flex flex-col md:flex-row gap-4 justify-around p-4 md:p-8 bg-white">
+            <LogInLogoutButton />
             <section className="min-w-[65%]">{children}</section>
             <aside className="min-w-[30%] bg-white">
               <SideBar />

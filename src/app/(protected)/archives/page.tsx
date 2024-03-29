@@ -1,6 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Logout from '../Logout';
+import Unauthorized from '../../components/reusable/Unauthorized';
+import IndividualPost from './posts/IndivudualPost';
 
 const Archives = async () => {
   const cookieStore = cookies();
@@ -10,14 +12,16 @@ const Archives = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  //   console.log({ user });
-
   if (!user) {
-    return <div>Not logged in</div>;
+    return (
+      <div>
+        <Unauthorized />
+      </div>
+    );
   }
   return (
-    <div>
-      <h1>Archives</h1>
+    <div className='flex flex-col justify-center items-center'>
+      <IndividualPost />
     </div>
   );
 };
