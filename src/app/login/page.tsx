@@ -33,25 +33,12 @@ const Login = () => {
     });
     setEmail('');
     setPassword('');
-    router.push("/archives");
-    router.refresh();
-  };
-
-  const handleSignUp = async () => {
-    await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    });
-    setEmail('');
-    setPassword('');
+    router.push('/archives');
     router.refresh();
   };
 
   if (loading) return <div>Loading...</div>;
-  
+
   if (user)
     return (
       <div>
@@ -84,12 +71,6 @@ const Login = () => {
         className='bg-green-500 text-white rounded-md px-4 py-2 mr-2 w-fit font-bold hover:bg-green-600 duration-300 min-w-[120px]'
       >
         Sign in
-      </button>
-      <button
-        onClick={handleSignUp}
-        className='bg-blue-500 text-white rounded-md px-4 py-2 mr-2 w-fit font-bold hover:bg-blue-600 duration-300 min-w-[120px]'
-      >
-        Sign up
       </button>
     </div>
   );

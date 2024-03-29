@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { useLanguageStore } from '@/src/app/utils/languageStore';
 import { useState } from 'react';
 import { IoMdMenu } from 'react-icons/io';
+import { RiAdminFill } from 'react-icons/ri';
 import NavMobileMenu from './NavMobileMenu';
+import Logout from '../../(protected)/Logout';
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -15,9 +17,17 @@ const Navbar = () => {
   };
   const { language, toggleLanguage } = useLanguageStore();
 
-
   return (
     <div className='NAVBAR_MAIN_CONTAINER relative bg-white md:rounded-t-md'>
+      <Link
+        href='/login'
+        className='absolute top-4 left-4 bg-gray-500 text-white rounded-md p-1 shadow-md shadow-gray-400 cursor-pointer hover:bg-gray-400 duration-300'
+      >
+        <RiAdminFill
+          size={20}
+          className='text-white cursor-pointer'
+        />
+      </Link>
       <div
         className='absolute top-4 right-4 bg-gray-500 text-white rounded-md p-1 shadow-md shadow-gray-400 md:hidden cursor-pointer hover:bg-gray-400 duration-300'
         onClick={handleMobileMenu}
@@ -42,6 +52,9 @@ const Navbar = () => {
         </div>
 
         <div className='NAVBAR_BUTTONS_CONTAINER fixed bottom-4 right-4 flex flex-col gap-2'>
+          
+          <Logout />
+          
           <Link
             href='https://www.canadahelps.org/en/dn/31808'
             className='NAVBAR_SCHEDULE_BUTTON bg-blue-500 hover:bg-blue-400 min-w-[180px] py-1 rounded-md text-white px-2 duration-300 shadow-md shadow-gray-400 text-center animate-pulse font-bold'
