@@ -12,28 +12,19 @@ const LogInLogoutButton = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log({ user });
+  // console.log({ user });
 
   if (!user) {
     return (
-      <div>
-        <Link
-          href='/login'
-          className='absolute top-4 left-4 bg-gray-500 text-white rounded-md p-1 shadow-md shadow-gray-400 cursor-pointer hover:bg-gray-400 duration-300'
-        >
-          <RiAdminFill
-            size={20}
-            className='text-white cursor-pointer'
-          />
-        </Link>
-      </div>
+      <Link
+        href='/login'
+        className='absolute top-4 left-4 md:top-2 md:left-2 bg-gray-500 hover:bg-gray-400 p-1 rounded-md text-white z-[10]'
+      >
+        <RiAdminFill size={30} />
+      </Link>
     );
   }
-  return (
-    <div className='absolute top-4 left-4'>
-      <Logout />
-    </div>
-  );
+  return <Logout />;
 };
 
 export default LogInLogoutButton;

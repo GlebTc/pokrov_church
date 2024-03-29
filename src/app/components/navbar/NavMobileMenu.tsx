@@ -15,7 +15,7 @@ const NavMobileMenu = ({
   const pathname = usePathname();
   const { language } = useLanguageStore();
   return (
-    <div className='z-[40]'>
+    <div>
       <div
         className={
           mobileMenu
@@ -33,7 +33,7 @@ const NavMobileMenu = ({
         <div className='MOBILE_MENU_CLOSE_BUTTON_AND_HEADER_CONTAINER h-[80px] flex justify-between items-center px-5 border-b-2 border-black'>
           <div className='absolute top-4 right-4 bg-gray-400 text-black rounded-md p-1 shadow-md shadow-gray-600 md:hidden hover:bg-gray-600 duration-300'>
             <AiOutlineClose
-              size={40}
+              size={30}
               className='text-white cursor-pointer'
               onClick={handleMobileMenu}
             />

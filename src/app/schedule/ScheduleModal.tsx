@@ -4,7 +4,7 @@ import { IoClose } from 'react-icons/io5';
 
 const ScheduleModal = ({ setModal }: { setModal: any }) => {
   return (
-    <div className='fixed inset-0 z-50 flex justify-center items-center bg-gray-900/70 w-full p-8'>
+    <div className='fixed inset-0 z-[50] flex justify-center items-center bg-gray-900/70 w-full p-8'>
       <div className='CLOSE_BUTTON absolute top-5 right-5 p-1 bg-gray-500 rounded-md hover:bg-gray-600 duration-300 z-[100]'>
         <IoClose
           size={40}

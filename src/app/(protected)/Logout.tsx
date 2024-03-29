@@ -1,7 +1,8 @@
 'use client';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { RiLogoutBoxLine } from 'react-icons/ri';
+import Link from 'next/link';
 
 const Logout = () => {
   const supabase = createClientComponentClient();
@@ -18,14 +19,12 @@ const Logout = () => {
   };
 
   return (
-    <div>
-      <button
-        onClick={handleSignOut}
-        className='NAVBAR_MAIN_PAGE_BUTTON bg-red-500 hover:bg-red-400 min-w-[100px] py-1 rounded-md text-white px-2 duration-300 shadow-md shadow-gray-400 text-center'
-      >
-        Log Out
-      </button>
-    </div>
+    <button
+      onClick={handleSignOut}
+      className='absolute top-4 left-4 md:top-2 md:left-2 bg-red-500 hover:bg-red-400 p-1 rounded-md text-white z-[10]'
+    >
+      <RiLogoutBoxLine size={30} />
+    </button>
   );
 };
 
