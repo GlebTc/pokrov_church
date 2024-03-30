@@ -1,8 +1,6 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import Logout from '../Logout';
 import Unauthorized from '../../components/reusable/Unauthorized';
-import IndividualPost from './posts/IndivudualPost';
 
 const Archives = async () => {
   const cookieStore = cookies();
@@ -19,9 +17,10 @@ const Archives = async () => {
       </div>
     );
   }
+
   return (
     <div className='flex flex-col justify-center items-center'>
-      <IndividualPost />
+      Archived posts will render here
     </div>
   );
 };

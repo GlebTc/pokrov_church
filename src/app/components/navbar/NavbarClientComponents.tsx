@@ -1,7 +1,7 @@
 'use client';
 import { IoMdMenu } from 'react-icons/io';
 import { useState } from 'react';
-import { useLanguageStore } from '@/src/app/utils/languageStore';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import Image from 'next/image';
 import nav_hero_image from '@/public/main_hero.webp';
 import Link from 'next/link';
@@ -26,12 +26,12 @@ const NavbarClientComponents = () => {
         href='/'
         className='NAVBAR_TITLE_CONTAINER'
       >
-        <h1 className='text-2xl font-semibold'>
+        <h1 className='text-2xl font-semibold px-4'>
           {language === 'en'
             ? 'Holy Protection of the Mother of God Church'
             : 'Храм Покрова Пресвятой Богородицы'}
         </h1>
-        <p className='text-gray-700'>
+        <p className='text-gray-700 px-4'>
           {language === 'en'
             ? 'Russian Orthodox Church Abroad (Hamilton, Ontario)'
             : 'Русская Православная Церковь Заграницей (Гамильтон, Онтарио)'}

@@ -1,5 +1,5 @@
 'use client';
-import { useLanguageStore } from '@/src/app/utils/languageStore';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import main_page_content from '@/src/app/utils/content/mainPageContent.json';
 import main_image_one from '@/public/main_image_one.webp';
 import Image from 'next/image';

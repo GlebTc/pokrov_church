@@ -1,5 +1,5 @@
 'use client';
-import { useLanguageStore } from '@/src/app/utils/languageStore';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import Link from 'next/link';
 
 const NavbarUserNavShortcuts = () => {

@@ -20,6 +20,12 @@
     "url_en": "/donations"
   },
   {
+    "title_ru": "Расписание",
+    "title_en": "Schedule",
+    "url_en": "/schedule"
+  },
+  
+  {
     "title_ru": "Ссылки",
     "title_en": "Links",
     "url_en": "/links"

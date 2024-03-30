@@ -3,7 +3,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
-import { useLanguageStore } from '@/src/app/utils/languageStore';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import Logout from '../(protected)/Logout';
 
 const Login = () => {
