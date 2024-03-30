@@ -47,7 +47,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
     // }
   };
   return (
-    <div className='max-w-4xl mx-auto my-8'>
+    <div className='INDIVIDUAL_NEWS_POST_CONTAINER max-w-4xl mx-auto my-8'>
       {imageUrl && (
         <div className='w-[200px] '>
           <Image
@@ -66,7 +66,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
           Posted by {author} on {formatDate(createdAt)}{' '}
           {/* Use props.author and props.createdAt */}
         </p>
-        <p className='text-lg'>{content}</p>
+        <p className='text-lg text-justify'>{content}</p>
         {user && (
           <div onClick={handleDelete}>
             <DeletePostButton />

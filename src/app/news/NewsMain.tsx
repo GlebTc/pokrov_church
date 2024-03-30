@@ -19,6 +19,9 @@ const NewsMain = ({ user }: { user: any }) => {
     }, 1000);
   }, [newPostModal || deletedPostIds]);
 
+    // Sort news articles by createdAt timestamp from newest to oldest
+    const sortedNews = news.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
   return (
     <div className='flex flex-col bg-white justify-around'>
       <div className='flex justify-between px-8'>
@@ -29,13 +32,14 @@ const NewsMain = ({ user }: { user: any }) => {
           {user && <AddNewPostButton />}
         </div>
       </div>
-      <div className='flex flex-col justify-center items-center'>
+
+      <div className='flex flex-col justify-center items-start px-12 md:px-8'>
         {isLoading ? (
           <Loading message="Updating Posts..."/>
         ) : (
           <div>
-            {news &&
-              news.map((post) => (
+            {sortedNews &&
+              sortedNews.map((post) => (
                 <IndividualNewsPost
                   key={post.id}
                   id={post.id}
