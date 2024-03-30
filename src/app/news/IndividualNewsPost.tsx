@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import church_front from '@/public/church_front.webp';
-import { ImGift } from 'react-icons/im';
+import { useNewsStore } from '../utils/stores/NewsStore';
 
 interface IndividualNewsPostProps {
   id: string;
@@ -9,6 +8,7 @@ interface IndividualNewsPostProps {
   author: string;
   content: string;
   imageUrl: string;
+  setDeletedPostIds: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
@@ -18,7 +18,14 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
   author,
   content,
   imageUrl,
+  setDeletedPostIds,
 }) => {
+  const { deletePost } = useNewsStore();
+
+  const handleDelete = () => {
+    setDeletedPostIds((prevIds) => [...prevIds, id]);
+    deletePost(id); // Call the deletePost function with the post ID
+  };
   return (
     <div className='max-w-4xl mx-auto my-8'>
       {imageUrl && (
@@ -40,6 +47,12 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
           {/* Use props.author and props.createdAt */}
         </p>
         <p className='text-lg'>{content}</p>
+        <button
+          onClick={handleDelete}
+          className='bg-red-300 p-1 px-2 rounded-md text-white hover:bg-red-500 mt-4'
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

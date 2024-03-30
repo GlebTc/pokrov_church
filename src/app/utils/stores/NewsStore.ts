@@ -8,6 +8,8 @@ interface NewsStoreProps {
   fetchNews: () => void;
   isLoading?: boolean;
   createNewsPost: (newsPost: NewsType) => void;
+  deletePost: (id: string) => void;
+  
 }
 
 const supabaseNews = createClient<NewsType>(
@@ -35,6 +37,12 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
       },
     ]);
 
+    if (data) {
+      set({ news: [...data] });
+    }
+  },
+  deletePost: async (id) => {
+    const { data, error } = await supabaseNews.from('News').delete().eq('id', id);
     if (data) {
       set({ news: [...data] });
     }

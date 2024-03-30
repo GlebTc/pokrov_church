@@ -9,14 +9,13 @@ import AddNewPost from './AddNewPost';
 
 const NewsMain = ({ user }: { user: any }) => {
   const [newPostModal, setNewPostModal] = useState(false);
+  const [deletedPostIds, setDeletedPostIds] = useState<string[]>([]);
   const { language } = useLanguageStore();
-  const { news, fetchNews, isLoading } = useNewsStore();
+  const { news, fetchNews, isLoading, deletePost } = useNewsStore();
 
   useEffect(() => {
     fetchNews();
-  }, []);
-
-  // console.log(news);
+  }, [newPostModal || deletedPostIds]);
 
   return (
     <div className='flex flex-col bg-white justify-around'>
@@ -44,12 +43,13 @@ const NewsMain = ({ user }: { user: any }) => {
                   author={post.author}
                   content={post.content}
                   imageUrl={post.imageUrl}
+                  setDeletedPostIds={setDeletedPostIds}
                 />
               ))}
           </div>
         )}
       </div>
-        {newPostModal && <AddNewPost setNewPostModal={setNewPostModal} />}
+      {newPostModal && <AddNewPost setNewPostModal={setNewPostModal} />}
     </div>
   );
 };
