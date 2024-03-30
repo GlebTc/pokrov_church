@@ -31,7 +31,7 @@ const NewsMain = ({ user }: { user: any }) => {
       </div>
       <div className='flex flex-col justify-center items-center'>
         {isLoading ? (
-          <Loading />
+          <Loading message="Updating Posts..."/>
         ) : (
           <div>
             {news &&

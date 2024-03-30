@@ -1,6 +1,8 @@
+'use client';
 import Image from 'next/image';
 import { useNewsStore } from '../utils/stores/NewsStore';
 import DeletePostButton from './DeletePostButton';
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface IndividualNewsPostProps {
   user: any;
@@ -24,10 +26,25 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
   user,
 }) => {
   const { deletePost } = useNewsStore();
+  // const supabase = createClientComponentClient();
 
-  const handleDelete = () => {
+  // Function to format the date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0'); // Ensure 2-digit day
+    const month = date.toLocaleString('en-US', { month: 'long' }); // Full month name
+    const year = date.getFullYear().toString(); // 4-digit year
+    return `${month} ${day}, ${year}`;
+  };
+
+  const handleDelete = async () => {
     setDeletedPostIds((prevIds) => [...prevIds, id]);
-    deletePost(id); // Call the deletePost function with the post ID
+    deletePost(id);
+    // Logic for deleting image from Supabase storage
+    // const fileName = imageUrl.split('/').pop(); // Extract the file name from the URL
+    // if (fileName) {
+    //   await supabase.storage.from('news_post_images').remove([fileName]); // Delete the image from Supabase storage
+    // }
   };
   return (
     <div className='max-w-4xl mx-auto my-8'>
@@ -46,7 +63,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
       <div className='mt-4'>
         <h1 className='text-3xl font-bold'>{title}</h1>
         <p className='text-sm text-gray-500 mb-2'>
-          Posted by {author} on {createdAt}{' '}
+          Posted by {author} on {formatDate(createdAt)}{' '}
           {/* Use props.author and props.createdAt */}
         </p>
         <p className='text-lg'>{content}</p>

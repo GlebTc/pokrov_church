@@ -1,14 +1,12 @@
-const Loading = () => {
-    return (
-      <div className="flex justify-center items-start h-screen">
-        <div className="bg-white border py-8 px-12 rounded-lg shadow-lg">
-          <p className="text-lg text-gray-800">Loading...</p>
-          <div className="mt-4 flex justify-center">
-            <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
-          </div>
-        </div>
+const Loading = ({ message }: { message: string }) => {
+  return (
+    <div className="fixed inset-0 z-60 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div className="bg-white border py-8 px-12 rounded-lg shadow-lg flex flex-col items-center">
+        <p className="text-lg text-gray-800 mb-4">{message}</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-700"></div>
       </div>
-    );
-  };
-  
-  export default Loading;
+    </div>
+  );
+};
+
+export default Loading;

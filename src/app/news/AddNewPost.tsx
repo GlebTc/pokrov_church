@@ -4,6 +4,7 @@ import { useNewsStore } from '@/src/app/utils/stores/NewsStore';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NewsType } from '../utils/types/newsTypes';
 import { FormData } from '../utils/types/unsortedTypes';
+import Loading from '../components/reusable/Loading';
 
 const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
   const [imageUploading, setImageUploading] = useState<boolean>(false);
@@ -85,7 +86,7 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
   return (
     <div className='MAIN_FORM_CONTAINER fixed inset-0 z-[50] flex flex-col justify-center items-center bg-gray-900/90 w-full p-8 text-white'>
       <h2 className='text-2xl font-bold mb-4'>Add New Post</h2>
-      {imageUploading && <p>Uploading image...</p>}
+      {imageUploading && <Loading message='Uploading Image...' />}
       <form onSubmit={handleSubmit}>
         <div className='FORM_CONTAINER mb-4 w-[90dvw] md:w-[70dvw]'>
           <div className='mb-4'>
@@ -157,19 +158,21 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
           />
         </div>
 
-        <button
-          type='submit'
-          className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500'
-        >
-          Add Post
-        </button>
+        <div className='ADD_NEW_POST_BUTTONS_CONTAINER flex flex-col gap-4'>
+          <button
+            type='submit'
+            className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 max-w-[150px]'
+          >
+            Add Post
+          </button>
+          <button
+            className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 max-w-[150px]'
+            onClick={handleCloseModal}
+          >
+            Cancel Post
+          </button>
+        </div>
       </form>
-      <button
-        className='close-button'
-        onClick={handleCloseModal}
-      >
-        Close
-      </button>
     </div>
   );
 };
