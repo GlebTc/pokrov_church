@@ -3,13 +3,7 @@ import { useState } from 'react';
 import { useNewsStore } from '@/src/app/utils/stores/NewsStore';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NewsType } from '../utils/types/newsTypes';
-
-interface FormData {
-  title: string;
-  content: string;
-  author: string;
-  imageUrl: string;
-}
+import { FormData } from '../utils/types/unsortedTypes';
 
 const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
   const [imageUploading, setImageUploading] = useState<boolean>(false);

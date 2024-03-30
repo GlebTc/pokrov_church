@@ -14,20 +14,21 @@ const NewsMain = ({ user }: { user: any }) => {
   const { news, fetchNews, isLoading, deletePost } = useNewsStore();
 
   useEffect(() => {
-    fetchNews();
+    setTimeout(() => {
+      fetchNews();
+    }, 1000);
   }, [newPostModal || deletedPostIds]);
 
   return (
     <div className='flex flex-col bg-white justify-around'>
-      <div
-        className='flex justify-end'
-        onClick={() => setNewPostModal(true)}
-      >
-        {user && <AddNewPostButton />}
+      <div className='flex justify-between px-8'>
+        <h2 className='text-3xl font-semibold mb-8'>
+          {language === 'en' ? 'News' : 'Новости'}
+        </h2>
+        <div onClick={() => setNewPostModal(true)}>
+          {user && <AddNewPostButton />}
+        </div>
       </div>
-      <h2 className='text-3xl font-semibold mb-8'>
-        {language === 'en' ? 'News' : 'Новости'}
-      </h2>
       <div className='flex flex-col justify-center items-center'>
         {isLoading ? (
           <Loading />
@@ -44,6 +45,7 @@ const NewsMain = ({ user }: { user: any }) => {
                   content={post.content}
                   imageUrl={post.imageUrl}
                   setDeletedPostIds={setDeletedPostIds}
+                  user={user}
                 />
               ))}
           </div>

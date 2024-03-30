@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import { useNewsStore } from '../utils/stores/NewsStore';
+import DeletePostButton from './DeletePostButton';
 
 interface IndividualNewsPostProps {
+  user: any;
   id: string;
   createdAt: string;
   title: string;
@@ -19,6 +21,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
   content,
   imageUrl,
   setDeletedPostIds,
+  user,
 }) => {
   const { deletePost } = useNewsStore();
 
@@ -47,12 +50,11 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
           {/* Use props.author and props.createdAt */}
         </p>
         <p className='text-lg'>{content}</p>
-        <button
-          onClick={handleDelete}
-          className='bg-red-300 p-1 px-2 rounded-md text-white hover:bg-red-500 mt-4'
-        >
-          Delete
-        </button>
+        {user && (
+          <div onClick={handleDelete}>
+            <DeletePostButton />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
+import { User } from "@supabase/supabase-js";
+
 export interface userType {
-    id: string;
-    email: string;
+
     
   }

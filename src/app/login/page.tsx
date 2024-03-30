@@ -24,7 +24,7 @@ const Login = () => {
     setEmail('');
     setPassword('');
 
-    router.push('/archives');
+    router.push('/news');
     router.refresh();
   };
 
