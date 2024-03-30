@@ -6,6 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 interface NewsStoreProps {
     news: NewsType[];
     fetchNews: () => void;
+    isLoading?: boolean;
 }
 
 const supabaseNews = createClient<NewsType>(
@@ -16,10 +17,12 @@ const supabaseNews = createClient<NewsType>(
 
 export const useNewsStore = create<NewsStoreProps>((set) => ({
     news: [],
+    isLoading: true,
     fetchNews: async () => {
         const { data: news, error } = await supabaseNews.from('News').select('*');
         if (news) {
             set({ news });
+            set({ isLoading: false });
         }
     },
 }));
