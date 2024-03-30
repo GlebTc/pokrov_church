@@ -1,7 +1,8 @@
 Logout.tsx - 10
 LogInLogoutButton.tsx - 10
 NavbarUserNavShortcuts.tsx - NAVBAR_USER_NAVIGATION_SHORTCUTS - 10
-NavMobileMenu.tsx - Main Div - 40
+NavMobileMenu.tsx - MOBILE_MENU_OVERLAY - 50
+NavMobileMenu.tsx - MOBILE_MENU - 50
 ScheduleModal.tsx - Main Div - 50
 ScheduleModal.tsx - CLOSE_BUTTON - 100
-Navbar.tsx - NAVBAR_MAIN_CONTAINER - 100
+

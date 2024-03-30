@@ -19,14 +19,14 @@ const NavMobileMenu = ({
       <div
         className={
           mobileMenu
-            ? 'MOBILE_MENU_OVERLAY md:hidden fixed left-0 top-0 w-full h-screen bg-black/60'
+            ? 'MOBILE_MENU_OVERLAY md:hidden fixed left-0 top-0 w-full h-screen bg-black/60 z-[50]'
             : 'hidden'
         }
       ></div>
       <div
         className={
           mobileMenu
-            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-[75%] sm:w-[50%] md:w-[45%] h-screen bg-gray-400 ease-in duration-1000'
+            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-[75%] sm:w-[50%] md:w-[45%] h-screen bg-gray-400 ease-in duration-1000 z-[50]'
             : 'MOBILE_MENU md:hidden fixed right-[-100%] top-0 w-[75%] sm:w-[50%] md:w-[45%] h-screen bg-slate-300 ease-in duration-1000'
         }
       >

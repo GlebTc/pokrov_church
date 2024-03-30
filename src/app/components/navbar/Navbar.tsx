@@ -6,7 +6,7 @@ NavbarClientComponents;
 
 const Navbar = () => {
   return (
-    <div className='NAVBAR_MAIN_CONTAINER relative bg-white md:rounded-t-md z-[50]'>
+    <div className='NAVBAR_MAIN_CONTAINER relative bg-white md:rounded-t-md'>
       <LogInLogoutButton />
       <NavbarUserNavShortcuts />
       <NavbarClientComponents />

@@ -2,7 +2,6 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import { RiLogoutBoxLine } from 'react-icons/ri';
-import Link from 'next/link';
 
 const Logout = () => {
   const supabase = createClientComponentClient();

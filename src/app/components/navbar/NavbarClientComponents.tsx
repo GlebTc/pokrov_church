@@ -40,6 +40,7 @@ const NavbarClientComponents = () => {
       <div className='NAVBAR_HERO_CONTAINER w-full mt-8'>
         <Image
           src={nav_hero_image}
+          priority
           alt='Navbar Hero Image | Храм Покрова Пресвятой Богородицы | Holy Protection of the Mother of God Church'
         />
       </div>

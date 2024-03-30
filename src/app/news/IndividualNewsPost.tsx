@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import church_front from '@/public/church_front.webp';
+import { ImGift } from 'react-icons/im';
 
 interface IndividualNewsPostProps {
   id: string;
@@ -20,13 +21,17 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
 }) => {
   return (
     <div className='max-w-4xl mx-auto my-8'>
-      <div className='w-[200px] '>
-        <Image
-          src={church_front} // Use props.imageUrl instead of post.imageUrl
-          alt={title} // Use props.title instead of post.title
-          className='w-[200px] h-auto rounded-md'
-        />
-      </div>
+      {imageUrl && (
+        <div className='w-[200px] '>
+          <Image
+            src={imageUrl} // Use props.imageUrl instead of post.imageUrl
+            alt={title} // Use props.title instead of post.title
+            width={200}
+            height={200}
+            className='rounded-md'
+          />
+        </div>
+      )}
 
       <div className='mt-4'>
         <h1 className='text-3xl font-bold'>{title}</h1>
