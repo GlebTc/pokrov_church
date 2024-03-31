@@ -67,7 +67,7 @@ const NavMobileMenu = ({
                 </Link>
                 {item.subMenu && (
                   <ul
-                    className={`absolute top-0 left-[140px] w-fit bg-gray-300 text-black z-[100] rounded-md shadow-md shadow-gray-600${
+                    className={`MOBILE_MENU_SUBMENU_MAIN_CONTAINER absolute top-0 ${language === 'en' ? 'left-[138px] w-fit' : 'left-[160px] w-fit min-w-[240px]'} bg-gray-300 text-black z-[100] rounded-md shadow-md shadow-gray-600${
                       activeSubMenu === index
                         ? ' z-[100] opacity-100 transition-opacity duration-[500ms]'
                         : ' z-[100] opacity-0 transition-opacity duration-[500ms]'

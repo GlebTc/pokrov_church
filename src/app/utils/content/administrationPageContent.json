@@ -1,0 +1,34 @@
+{
+  "paragraph_one": {
+    "ru": "Управление Русской Православной Церкви заграницей осуществляется Собором епископов через Первоиерарха с Архиерейским Синодом и епархиальных архиереев. Собор епископов, созываемый обычно каждые два года, является высшим органом церковного законодательства, управления, суда и контроля для Русской Православной Церкви заграницей. Архиерейский Синод является исполнительным органом Собора. Русская Православная Церковь заграницей разделяется на епархии. Все епархии находятся под управлением своих епархиальных архиереев. В каждой епархии имеется Епархиальный совет, а также епархиальный церковный суд. По положению Русской Православной Церкви заграницей Епархиальное собрание с участием клира, мирян и представителей монастырей, церковных братств, школ и благотворительных огранизаций, должно созываться не менее чем раз в три года.",
+    "en": "The administration of the Russian Orthodox Church Abroad is carried out by the Council of Bishops through the First Hierarch with the Episcopal Synod and diocesan bishops. The Council of Bishops, usually convened every two years, is the highest body of church legislation, administration, court and control for the Russian Orthodox Church Abroad. The Episcopal Synod is the executive body of the Council. The Russian Orthodox Church Abroad is divided into dioceses. All dioceses are under the jurisdiction of their diocesan bishops. Each diocese has a Diocesan Council, as well as a diocesan church court. According to the regulations of the Russian Orthodox Church Abroad, the Diocesan Assembly with the participation of the clergy, laity and representatives of monasteries, church brotherhoods, schools and charitable organizations must be convened at least once every three years."
+  },
+  "administration_admin_one": {
+    "url_description_ru": "Биография Святейшего Патриарха Кирилла",
+    "url_description_en": "Biography of His Holiness Patriarch Kirill",
+    "ru": "Святейший Патриарх Московский и всея Руси Кирилл",
+    "en": "His Holiness Patriarch of Moscow and All Russia Kirill",
+    "url": "http://www.patriarchia.ru/db/text/547091.html"
+  },
+  "administration_admin_two": {
+    "url_description_ru": "Биография Митрополита Илариона ",
+    "url_description_en": "Biography of Metropolitan of Ilarion",
+    "ru": "Митрополит Восточно-Американский и Нью-Йоркский Иларион, Первоиерарх Русской Православной Церкви заграницей",
+    "en": "Metropolitan of Eastern America and New York Hilarion, First Hierarch of the Russian Orthodox Church Abroad",
+    "url": "http://synod.com/synod/rocor/bio_bphilarion.html"
+  },
+  "administration_admin_three": {
+    "url_description_ru": "Биография Епископа Гавриила",
+    "url_description_en": "Biography of Bishop Gabriel",
+    "ru": "Архиепископ Монреальский и Канадский Гавриил",
+    "en": "Archbishop of Montreal and Canada Gabriel",
+    "url": "http://synod.com/synod/rocor/bio_bpgabriel.html"
+  },
+  "administration_admin_four": {
+    "url_description_ru": "Биография Настоятеля Петра",
+    "url_description_en": "Biography of Rector Peter",
+    "ru": "Настоятель Храма Покрова Пресвятой Богородицы Протоиерей Пётр Шашков",
+    "en": "Rector of the Church of the Protection of the Most Holy Theotokos Archpriest Peter Shashkov",
+    "url": "/our-parish/administration/fr-peter-biography"
+  }
+}
