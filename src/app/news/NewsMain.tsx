@@ -55,7 +55,7 @@ const NewsMain = ({ user }: { user: any }) => {
           </div>
         )}
       </div>
-      {newPostModal && <AddNewPost setNewPostModal={setNewPostModal} />}
+      {newPostModal && <AddNewPost setNewPostModal={setNewPostModal} user={user} />}
     </div>
   );
 };

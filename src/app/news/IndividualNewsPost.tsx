@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useNewsStore } from '../utils/stores/NewsStore';
 import DeletePostButton from './DeletePostButton';
 import { useState } from 'react';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface IndividualNewsPostProps {
@@ -28,6 +29,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
 }) => {
   const { deletePost } = useNewsStore();
   const [readMore, setReadMore] = useState<boolean>(false);
+  const { language } = useLanguageStore();
 
   // const supabase = createClientComponentClient();
 
@@ -72,21 +74,22 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
         <p className='text-sm text-gray-500 mb-2'>
           Posted by {author} on {formatDate(createdAt)}{' '}
         </p>
-        <p
+        <div
           className={`text-lg text-justify ${
             readMore
               ? 'h-full transition-h duration-[1000ms]'
               : 'max-h-[315px] transition-h overflow-hidden duration-[1000ms]'
           }`}
-        >
-          {content}
-        </p>
+          dangerouslySetInnerHTML={{ __html: content }}
+        ></div>
         <div className='flex justify-end'>
           <button
             className='text-blue-400 hover:text-blue-500 duration-300'
             onClick={toggleReadMore}
           >
-            {readMore ? 'Read Less' : 'Read More'}
+            {readMore
+              ? `${language === 'en' ? 'Read Less' : 'Скрыть'}`
+              : `${language === 'en' ? 'Read More' : 'Читать далее'}`}
           </button>
         </div>
         {user && (

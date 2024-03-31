@@ -1,20 +1,36 @@
 'use client';
 import { useState } from 'react';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import { useNewsStore } from '@/src/app/utils/stores/NewsStore';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NewsType } from '../utils/types/newsTypes';
 import { FormData } from '../utils/types/unsortedTypes';
 import Loading from '../components/reusable/Loading';
+import Tiptap from '../components/reusable/textEditor.tsx/Tiptap';
 
-const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
+const AddNewPost = ({
+  setNewPostModal,
+  user,
+}: {
+  setNewPostModal: any;
+  user: any;
+}) => {
   const [imageUploading, setImageUploading] = useState<boolean>(false);
+  const { language } = useLanguageStore();
   const supabase = createClientComponentClient();
   const [formData, setFormData] = useState<FormData>({
     title: '',
     content: '',
-    author: '',
+    author: user.email,
     imageUrl: '',
   });
+
+  const handleContentChange = (contentInput: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      content: contentInput,
+    }));
+  };
 
   const { createNewsPost } = useNewsStore();
 
@@ -36,7 +52,7 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
       created_at: new Date().toISOString(), // Set the current timestamp
       title: formData.title,
       content: formData.content,
-      author: formData.author,
+      author: user.email,
       imageUrl: formData.imageUrl,
     };
 
@@ -84,8 +100,10 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
   };
 
   return (
-    <div className='MAIN_FORM_CONTAINER fixed inset-0 z-[50] flex flex-col justify-center items-center bg-gray-900/90 w-full p-8 text-white'>
-      <h2 className='text-2xl font-bold mb-4'>Add New Post</h2>
+    <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-900/90 w-full p-8 text-white z-[120]'>
+      <h2 className='text-2xl font-bold mb-4'>
+        {language === 'en' ? 'Add New Post' : 'Добавить новость'}
+      </h2>
       {imageUploading && <Loading message='Uploading Image...' />}
       <form onSubmit={handleSubmit}>
         <div className='FORM_CONTAINER mb-4 w-[90dvw] md:w-[70dvw]'>
@@ -94,7 +112,7 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
               htmlFor='title'
               className='block text-sm font-medium'
             >
-              Title
+              {language === 'en' ? 'Title' : 'Заголовок'}
             </label>
             <input
               type='text'
@@ -111,16 +129,14 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
               htmlFor='content'
               className='block text-sm font-medium'
             >
-              Content
+              {language === 'en' ? 'Content' : 'Содержание'}
             </label>
-            <textarea
-              id='content'
-              name='content'
-              value={formData.content}
-              onChange={handleChange}
-              rows={4}
-              className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
-              required
+
+            <Tiptap
+              content={formData.content}
+              onChange={(inputContent: any) =>
+                handleContentChange(inputContent)
+              }
             />
           </div>
           <div className='mb-4'>
@@ -128,7 +144,7 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
               htmlFor='author'
               className='block text-sm font-medium'
             >
-              Author
+              {language === 'en' ? 'Author' : 'Автор'}
             </label>
             <input
               type='text'
@@ -146,7 +162,7 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
             htmlFor='imageUpload'
             className='block text-sm font-medium'
           >
-            Upload Image
+            {language === 'en' ? 'Upload Image' : 'Загрузить изображение'}
           </label>
           <input
             type='file'
@@ -161,15 +177,15 @@ const AddNewPost = ({ setNewPostModal }: { setNewPostModal: any }) => {
         <div className='ADD_NEW_POST_BUTTONS_CONTAINER flex flex-col gap-4'>
           <button
             type='submit'
-            className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 max-w-[150px]'
+            className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 max-w-[200px]'
           >
-            Add Post
+            {language === 'en' ? 'Add New Post' : 'Добавить новость'}
           </button>
           <button
-            className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 max-w-[150px]'
+            className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 max-w-[200px]'
             onClick={handleCloseModal}
           >
-            Cancel Post
+            {language === 'en' ? 'Cancel' : 'Отмена'}
           </button>
         </div>
       </form>
