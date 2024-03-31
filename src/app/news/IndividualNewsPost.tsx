@@ -75,8 +75,8 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
         <p
           className={`text-lg text-justify ${
             readMore
-              ? 'h-full duration-[1000ms]'
-              : 'max-h-[315px] overflow-hidden duration-[1000ms]'
+              ? 'h-full transition-h duration-[1000ms]'
+              : 'max-h-[315px] transition-h overflow-hidden duration-[1000ms]'
           }`}
         >
           {content}

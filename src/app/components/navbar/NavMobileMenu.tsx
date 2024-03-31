@@ -26,7 +26,6 @@ const NavMobileMenu = ({
 
   const handleMenuClick = (index: number) => {
     setActiveSubMenu(index);
- 
   };
   return (
     <div>
@@ -40,8 +39,8 @@ const NavMobileMenu = ({
       <div
         className={
           mobileMenu
-            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-screen h-screen bg-gray-400 ease-in duration-1000 z-[50]'
-            : 'MOBILE_MENU md:hidden fixed right-[-100%] top-0 w-screen h-screen bg-slate-300 ease-in duration-1000'
+            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-screen h-screen bg-gray-400 ease-in duration-[1000ms] z-[50]'
+            : 'MOBILE_MENU md:hidden fixed right-[-100%] top-0 w-screen h-screen bg-gray-400 ease-in duration-[1000ms]'
         }
       >
         <div className='MOBILE_MENU_CLOSE_BUTTON_AND_HEADER_CONTAINER h-[80px] flex justify-between items-center px-5 border-b-2 border-black'>
@@ -54,7 +53,7 @@ const NavMobileMenu = ({
           </div>
         </div>
         <div className='MOBILE_MENU_ITEMS_CONTAINER p-5'>
-          <ul className='flex flex-col gap-4 justify-around items-start text-black text-2xl font-bold'>
+          <ul className='flex flex-col gap-4 justify-around items-start text-black text-xl font-bold'>
             {menuItems.map((item, index) => (
               <li
                 key={index}
@@ -68,8 +67,10 @@ const NavMobileMenu = ({
                 </Link>
                 {item.subMenu && (
                   <ul
-                    className={`absolute top-0 left-[160px] w-fit bg-gray-300 text-black z-[100] rounded-md ${
-                      activeSubMenu === index ? 'block' : 'hidden'
+                    className={`absolute top-0 left-[140px] w-fit bg-gray-300 text-black z-[100] rounded-md shadow-md shadow-gray-600${
+                      activeSubMenu === index
+                        ? ' z-[100] opacity-100 transition-opacity duration-[500ms]'
+                        : ' z-[100] opacity-0 transition-opacity duration-[500ms]'
                     }`}
                   >
                     {item.subMenu.map((subItem, subIndex) => (
