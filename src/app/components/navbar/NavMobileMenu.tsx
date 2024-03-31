@@ -3,7 +3,6 @@ import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import Link from 'next/link';
 import { AiOutlineClose } from 'react-icons/ai';
 import menuItems from '../../utils/menuItems.json';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const NavMobileMenu = ({
@@ -60,7 +59,7 @@ const NavMobileMenu = ({
                 className={`MOBILE_MENU_ITEM flex justify-center items-center h-full p-2 hover:bg-gray-300 hover:text-black duration-500 rounded-lg uppercase relative`}
                 onMouseEnter={() => handleSubMenuHover(index)}
                 onMouseLeave={handleSubMenuLeave}
-                onClick={handleMenuClick.bind(null, index)}
+                onClick={item.subMenu ? () => handleMenuClick(index) : handleMobileMenu}
               >
                 <Link href={item.url_en}>
                   {language === 'en' ? item.title_en : item.title_ru}

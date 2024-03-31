@@ -2,9 +2,10 @@
 import Image from 'next/image';
 import { useNewsStore } from '../utils/stores/NewsStore';
 import DeletePostButton from './DeletePostButton';
+import EditPostButton from './EditPostButton';
 import { useState } from 'react';
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
-// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import EditPost from './EditPost';
 
 interface IndividualNewsPostProps {
   user: any;
@@ -18,6 +19,7 @@ interface IndividualNewsPostProps {
 }
 
 const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
+  user,
   id,
   createdAt,
   title,
@@ -25,31 +27,28 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
   content,
   imageUrl,
   setDeletedPostIds,
-  user,
 }) => {
   const { deletePost } = useNewsStore();
   const [readMore, setReadMore] = useState<boolean>(false);
   const { language } = useLanguageStore();
-
-  // const supabase = createClientComponentClient();
+  const [editPostModal, setEditPostModal] = useState(false);
 
   // Function to format the date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0'); // Ensure 2-digit day
-    const month = date.toLocaleString('en-US', { month: 'long' }); // Full month name
-    const year = date.getFullYear().toString(); // 4-digit year
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getFullYear().toString();
     return `${month} ${day}, ${year}`;
   };
 
   const handleDelete = async () => {
     setDeletedPostIds((prevIds) => [...prevIds, id]);
     deletePost(id);
-    // Logic for deleting image from Supabase storage
-    // const fileName = imageUrl.split('/').pop(); // Extract the file name from the URL
-    // if (fileName) {
-    //   await supabase.storage.from('news_post_images').remove([fileName]); // Delete the image from Supabase storage
-    // }
+  };
+
+  const handleEdit = () => {
+    setEditPostModal(true);
   };
 
   const toggleReadMore = () => {
@@ -60,8 +59,8 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
       {imageUrl && (
         <div className='w-[200px] '>
           <Image
-            src={imageUrl} // Use props.imageUrl instead of post.imageUrl
-            alt={title} // Use props.title instead of post.title
+            src={imageUrl}
+            alt={title}
             width={200}
             height={200}
             className='rounded-md'
@@ -93,11 +92,35 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
           </button>
         </div>
         {user && (
-          <div onClick={handleDelete}>
-            <DeletePostButton />
+          <div className='flex gap-4'>
+            <div
+              onClick={handleDelete}
+              className='flex items-center'
+            >
+              <DeletePostButton />
+            </div>
+            <div
+              onClick={handleEdit}
+              className='flex items-center'
+            >
+              <EditPostButton />
+            </div>
           </div>
         )}
       </div>
+      {editPostModal && (
+        <EditPost
+          setEditPostModal={setEditPostModal}
+          user={user}
+          key={id}
+          id={id}
+          createdAt={createdAt}
+          title={title}
+          author={author}
+          content={content}
+          imageUrl={imageUrl}
+        />
+      )}
     </div>
   );
 };

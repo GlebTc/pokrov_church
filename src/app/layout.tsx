@@ -33,20 +33,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-{
-  /* <html lang="en">
-<body className={inter.className}>
-  <div>
-    <Navbar />
-    <div className="w-full flex flex-col md:flex-row gap-4 justify-around p-4 md:p-8 bg-white">
-      <LogInLogoutButton />
-      <section className="min-w-[65%]">{children}</section>
-      <aside className="min-w-[30%] bg-white">
-        <SideBar />
-      </aside>
-    </div>
-  </div>
-</body>
-</html> */
-}

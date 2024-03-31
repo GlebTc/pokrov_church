@@ -10,8 +10,7 @@ const Logout = () => {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      router.push('/'); // Redirect to home page after sign out
-      router.refresh(); // Refresh the page
+      router.refresh();
     } catch (error) {
       console.error('Error signing out:', error);
     }
