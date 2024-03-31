@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useNewsStore } from '../utils/stores/NewsStore';
 import DeletePostButton from './DeletePostButton';
+import { useState } from 'react';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface IndividualNewsPostProps {
@@ -26,6 +27,8 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
   user,
 }) => {
   const { deletePost } = useNewsStore();
+  const [readMore, setReadMore] = useState<boolean>(false);
+
   // const supabase = createClientComponentClient();
 
   // Function to format the date
@@ -46,6 +49,10 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
     //   await supabase.storage.from('news_post_images').remove([fileName]); // Delete the image from Supabase storage
     // }
   };
+
+  const toggleReadMore = () => {
+    setReadMore(!readMore);
+  };
   return (
     <div className='INDIVIDUAL_NEWS_POST_CONTAINER max-w-4xl mx-auto my-8'>
       {imageUrl && (
@@ -64,9 +71,24 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
         <h1 className='text-3xl font-bold'>{title}</h1>
         <p className='text-sm text-gray-500 mb-2'>
           Posted by {author} on {formatDate(createdAt)}{' '}
-          {/* Use props.author and props.createdAt */}
         </p>
-        <p className='text-lg text-justify'>{content}</p>
+        <p
+          className={`text-lg text-justify ${
+            readMore
+              ? 'h-full duration-[1000ms]'
+              : 'max-h-[315px] overflow-hidden duration-[1000ms]'
+          }`}
+        >
+          {content}
+        </p>
+        <div className='flex justify-end'>
+          <button
+            className='text-blue-400 hover:text-blue-500 duration-300'
+            onClick={toggleReadMore}
+          >
+            {readMore ? 'Read Less' : 'Read More'}
+          </button>
+        </div>
         {user && (
           <div onClick={handleDelete}>
             <DeletePostButton />

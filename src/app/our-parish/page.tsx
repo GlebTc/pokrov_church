@@ -2,6 +2,7 @@
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import Image from 'next/image';
 import our_parish from '@/public/our_parish.webp';
+import OurParishLink from './OurParishLink';
 
 const OurParish = () => {
   const { language } = useLanguageStore();
@@ -15,6 +16,7 @@ const OurParish = () => {
         alt='Our Parish | Наш Приход'
         className='rounded-md p-1 border-2'
       />
+      <OurParishLink />
     </div>
   );
 };
