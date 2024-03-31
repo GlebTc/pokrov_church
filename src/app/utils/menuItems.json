@@ -7,7 +7,24 @@
   {
     "title_ru": "Наш Приход",
     "title_en": "Our Parish",
-    "url_en": "/our-parish"
+    "url_en": "/our-parish",
+    "subMenu": [
+      {
+        "subMenuTitle_ru": "История Прихода",
+        "subMenuTitle_en": "Parish History",
+        "subMenuUrl_en": "/our-parish/parish-history"
+      },
+      {
+        "subMenuTitle_ru": "Администрация",
+        "subMenuTitle_en": "Administration",
+        "subMenuUrl_en": "/our-parish/administration"
+      },
+      {
+        "subMenuTitle_ru": "Галерея",
+        "subMenuTitle_en": "Gallery",
+        "subMenuUrl_en": "/our-parish/gallery"
+      }
+    ]
   },
   {
     "title_ru": "Новости",
@@ -24,7 +41,7 @@
     "title_en": "Schedule",
     "url_en": "/schedule"
   },
-  
+
   {
     "title_ru": "Ссылки",
     "title_en": "Links",

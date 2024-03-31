@@ -6,7 +6,7 @@ import Image from 'next/image';
 import nav_hero_image from '@/public/main_hero.webp';
 import Link from 'next/link';
 import NavMobileMenu from './NavMobileMenu';
-import menuItems from '@/src/app/utils/menuItems.json';
+import NavbarDesktopMenu from './NavbarDesktopMenu';
 
 const NavbarClientComponents = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -44,24 +44,12 @@ const NavbarClientComponents = () => {
           alt='Navbar Hero Image | Храм Покрова Пресвятой Богородицы | Holy Protection of the Mother of God Church'
         />
       </div>
-      <ul className='NAVBAR_MENU_CONTAINER h-[50px] bg-gray-500  justify-around items-center hidden md:flex'>
-        {menuItems.map((item, index) => (
-          <li
-            key={index}
-            className='NAVBAR_MENU_ITEM px-4 py-1 hover:bg-gray-400 rounded-md duration-300 '
-          >
-            <Link href={item.url_en}>
-              <p className='font-bold text-white'>
-                {language === 'en' ? item.title_en : item.title_ru}
-              </p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <NavbarDesktopMenu />
       {mobileMenu && (
         <NavMobileMenu
           mobileMenu={mobileMenu}
           handleMobileMenu={handleMobileMenu}
+          
         />
       )}
     </div>

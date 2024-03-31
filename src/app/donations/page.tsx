@@ -10,6 +10,12 @@ const Donations = () => {
       <h2 className='text-3xl font-semibold mb-8'>
         {language === 'en' ? 'Donations' : 'Пожертвования'}
       </h2>
+      <a
+        href='https://www.canadahelps.org/en/dn/31808'
+        className='button animate-pulse'
+      >
+        Donate
+      </a>
       <Image
         src={church_front}
         alt='Donations | Пожертвования'

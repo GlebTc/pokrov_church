@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { AiOutlineClose } from 'react-icons/ai';
 import menuItems from '../../utils/menuItems.json';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 const NavMobileMenu = ({
   mobileMenu,
@@ -12,8 +13,21 @@ const NavMobileMenu = ({
   mobileMenu: any;
   handleMobileMenu: any;
 }) => {
-  const pathname = usePathname();
   const { language } = useLanguageStore();
+  const [activeSubMenu, setActiveSubMenu] = useState<number | null>(null);
+
+  const handleSubMenuHover = (index: number) => {
+    setActiveSubMenu(index);
+  };
+
+  const handleSubMenuLeave = () => {
+    setActiveSubMenu(null);
+  };
+
+  const handleMenuClick = (index: number) => {
+    setActiveSubMenu(index);
+ 
+  };
   return (
     <div>
       <div
@@ -26,8 +40,8 @@ const NavMobileMenu = ({
       <div
         className={
           mobileMenu
-            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-[75%] sm:w-[50%] md:w-[45%] h-screen bg-gray-400 ease-in duration-1000 z-[50]'
-            : 'MOBILE_MENU md:hidden fixed right-[-100%] top-0 w-[75%] sm:w-[50%] md:w-[45%] h-screen bg-slate-300 ease-in duration-1000'
+            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-screen h-screen bg-gray-400 ease-in duration-1000 z-[50]'
+            : 'MOBILE_MENU md:hidden fixed right-[-100%] top-0 w-screen h-screen bg-slate-300 ease-in duration-1000'
         }
       >
         <div className='MOBILE_MENU_CLOSE_BUTTON_AND_HEADER_CONTAINER h-[80px] flex justify-between items-center px-5 border-b-2 border-black'>
@@ -44,25 +58,37 @@ const NavMobileMenu = ({
             {menuItems.map((item, index) => (
               <li
                 key={index}
-                className={`flex justify-center items-center h-full
-          ${
-            pathname !== item.url_en
-              ? 'p-2 hover:bg-gray-300 hover:text-black duration-500 rounded-lg uppercase'
-              : ''
-          }
-          `}
-                onClick={handleMobileMenu}
+                className={`MOBILE_MENU_ITEM flex justify-center items-center h-full p-2 hover:bg-gray-300 hover:text-black duration-500 rounded-lg uppercase relative`}
+                onMouseEnter={() => handleSubMenuHover(index)}
+                onMouseLeave={handleSubMenuLeave}
+                onClick={handleMenuClick.bind(null, index)}
               >
-                <Link
-                  href={item.url_en}
-                  className={`${
-                    pathname === item.url_en
-                      ? 'p-2 custom_orange duration-500 rounded-lg uppercase h-[100%]'
-                      : ''
-                  }`}
-                >
+                <Link href={item.url_en}>
                   {language === 'en' ? item.title_en : item.title_ru}
                 </Link>
+                {item.subMenu && (
+                  <ul
+                    className={`absolute top-0 left-[160px] w-fit bg-gray-300 text-black z-[100] rounded-md ${
+                      activeSubMenu === index ? 'block' : 'hidden'
+                    }`}
+                  >
+                    {item.subMenu.map((subItem, subIndex) => (
+                      <li
+                        key={subIndex}
+                        className='px-4 py-1 hover:bg-gray-400 rounded-md duration-300 hover:text-white'
+                        onClick={handleMobileMenu}
+                      >
+                        <Link href={subItem.subMenuUrl_en}>
+                          <p>
+                            {language === 'en'
+                              ? subItem.subMenuTitle_en
+                              : subItem.subMenuTitle_ru}
+                          </p>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
