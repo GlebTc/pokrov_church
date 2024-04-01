@@ -1,3 +1,3 @@
 # Holy Protection of the Mother of God Church
 
-[Live Link] (https://pokrov-church-hamilton.netlify.app 'Pokrov Church Hamilton')
+<a href="https://pokrov-church-hamilton.netlify.app" target="_blank">Pokrov Church Hamilton</a>
