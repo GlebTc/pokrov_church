@@ -4,10 +4,9 @@ import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import { useNewsStore } from '@/src/app/utils/stores/NewsStore';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NewsType } from '../utils/types/newsTypes';
-import { FormData } from '../utils/types/unsortedTypes';
 import Loading from '../components/reusable/Loading';
 import Tiptap from '../components/reusable/textEditor.tsx/Tiptap';
-import { create } from 'domain';
+
 
 const AddNewPost = ({
   setNewPostModal,
@@ -19,7 +18,8 @@ const AddNewPost = ({
   const [imageUploading, setImageUploading] = useState<boolean>(false);
   const { language } = useLanguageStore();
   const supabase = createClientComponentClient();
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<NewsType>({
+    id: '',
     title: '',
     content: '',
     author: user.email,
@@ -74,6 +74,7 @@ const AddNewPost = ({
       createNewsPost(newsPost);
 
       setFormData({
+        id: '',
         title: '',
         content: '',
         author: '',
@@ -106,6 +107,7 @@ const AddNewPost = ({
 
   const handleCloseModal = () => {
     setFormData({
+      id: '',
       title: '',
       content: '',
       author: '',
