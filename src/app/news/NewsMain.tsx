@@ -20,13 +20,17 @@ const NewsMain = ({ user }: { user: any }) => {
   }, [newPostModal || deletedPostIds]);
 
   // Sort news articles by createdAt timestamp from newest to oldest
-  const sortedNews = news.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-
+  const sortedNews = news
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 
   return (
     <div className='flex flex-col bg-white justify-around'>
-      <div className='flex justify-between px-8'>
-        <h2 className='text-3xl font-semibold mb-8'>
+      <div className='flex justify-between'>
+        <h2 className='text-3xl font-semibold md:mb-8'>
           {language === 'en' ? 'News' : 'Новости'}
         </h2>
         <div onClick={() => setNewPostModal(true)}>
@@ -36,7 +40,7 @@ const NewsMain = ({ user }: { user: any }) => {
 
       <div className='flex flex-col justify-center items-start px-4 md:px-8'>
         {isLoading ? (
-          <Loading message="Updating Posts..."/>
+          <Loading message='Updating Posts...' />
         ) : (
           <div>
             {sortedNews &&
@@ -56,7 +60,12 @@ const NewsMain = ({ user }: { user: any }) => {
           </div>
         )}
       </div>
-      {newPostModal && <AddNewPost setNewPostModal={setNewPostModal} user={user} />}
+      {newPostModal && (
+        <AddNewPost
+          setNewPostModal={setNewPostModal}
+          user={user}
+        />
+      )}
     </div>
   );
 };

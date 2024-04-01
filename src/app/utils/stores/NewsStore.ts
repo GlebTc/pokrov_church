@@ -33,6 +33,7 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
         content: newsPost.content,
         author: newsPost.author,
         imageUrl: newsPost.imageUrl,
+        created_at: newsPost.created_at,
       },
     ]);
 

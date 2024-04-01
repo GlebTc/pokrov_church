@@ -7,7 +7,6 @@ import { NewsType } from '../utils/types/newsTypes';
 import Loading from '../components/reusable/Loading';
 import Tiptap from '../components/reusable/textEditor.tsx/Tiptap';
 
-
 const AddNewPost = ({
   setNewPostModal,
   user,
@@ -48,17 +47,6 @@ const AddNewPost = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-      // Convert the formData.created_at date string to a Date object
-  const selectedDate = new Date(formData.created_at);
-
-  // Get the ISO string format of the date and add the time component
-  const isoDate = selectedDate.toISOString();
-
-  // Remove milliseconds from the ISO string
-  const formattedDate = isoDate.split('.')[0] + 'Z';
-
- 
-
     const newsPost: NewsType = {
       id: '',
       created_at: formData.created_at,
@@ -68,11 +56,8 @@ const AddNewPost = ({
       imageUrl: formData.imageUrl,
     };
 
-    console.log(newsPost);
-
     try {
       createNewsPost(newsPost);
-
       setFormData({
         id: '',
         title: '',
