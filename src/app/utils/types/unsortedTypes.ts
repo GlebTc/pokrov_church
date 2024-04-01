@@ -3,4 +3,5 @@ export interface FormData {
   content: string;
   author: string;
   imageUrl: string;
+  created_at: string;
 }

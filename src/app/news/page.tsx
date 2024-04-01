@@ -10,7 +10,6 @@ const News = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
   
   return (
     <div className='NEWS_MAIN_CONTAINER'>

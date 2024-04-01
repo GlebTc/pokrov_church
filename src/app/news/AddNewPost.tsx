@@ -7,6 +7,7 @@ import { NewsType } from '../utils/types/newsTypes';
 import { FormData } from '../utils/types/unsortedTypes';
 import Loading from '../components/reusable/Loading';
 import Tiptap from '../components/reusable/textEditor.tsx/Tiptap';
+import { create } from 'domain';
 
 const AddNewPost = ({
   setNewPostModal,
@@ -23,7 +24,9 @@ const AddNewPost = ({
     content: '',
     author: user.email,
     imageUrl: '',
+    created_at: '',
   });
+  const { createNewsPost } = useNewsStore();
 
   const handleContentChange = (contentInput: any) => {
     setFormData((prevData) => ({
@@ -31,8 +34,6 @@ const AddNewPost = ({
       content: contentInput,
     }));
   };
-
-  const { createNewsPost } = useNewsStore();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,14 +48,27 @@ const AddNewPost = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+      // Convert the formData.created_at date string to a Date object
+  const selectedDate = new Date(formData.created_at);
+
+  // Get the ISO string format of the date and add the time component
+  const isoDate = selectedDate.toISOString();
+
+  // Remove milliseconds from the ISO string
+  const formattedDate = isoDate.split('.')[0] + 'Z';
+
+ 
+
     const newsPost: NewsType = {
       id: '',
-      created_at: new Date().toISOString(), // Set the current timestamp
+      created_at: formData.created_at,
       title: formData.title,
       content: formData.content,
       author: user.email,
       imageUrl: formData.imageUrl,
     };
+
+    console.log(newsPost);
 
     try {
       createNewsPost(newsPost);
@@ -64,6 +78,7 @@ const AddNewPost = ({
         content: '',
         author: '',
         imageUrl: '',
+        created_at: '',
       });
 
       setNewPostModal(false);
@@ -95,6 +110,7 @@ const AddNewPost = ({
       content: '',
       author: '',
       imageUrl: '',
+      created_at: '',
     });
     setNewPostModal(false);
   };
@@ -119,6 +135,23 @@ const AddNewPost = ({
               id='title'
               name='title'
               value={formData.title}
+              onChange={handleChange}
+              className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
+              required
+            />
+          </div>
+          <div className='mb-4'>
+            <label
+              htmlFor='created_at'
+              className='block text-sm font-medium'
+            >
+              {language === 'en' ? 'Created At' : 'Дата создания'}
+            </label>
+            <input
+              type='date'
+              id='created_at'
+              name='created_at'
+              value={formData.created_at}
               onChange={handleChange}
               className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
               required

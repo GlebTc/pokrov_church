@@ -7,4 +7,5 @@ ScheduleModal.tsx - Main Div - 50
 NavMobileMenu.tsx - MOBILE_MENU_SUBMENU_MAIN_CONTAINER - 100
 ScheduleModal.tsx - CLOSE_BUTTON - 100
 AddNewPost.tsx - ADD_NEW_POST_MAIN_FORM_CONTAINER - 120
+NavbarUserNavShortcuts.tsx - NAVBAR_USER_NAVIGATION_SHORTCUTS_LANGUAGE_TOGGLE_BUTTON - 130
 

@@ -19,7 +19,7 @@ const NavbarUserNavShortcuts = () => {
         {language === 'en' ? 'Schedule' : 'Расписание'}
       </Link>
       <button
-        className='bg-gray-500 hover:bg-gray-400 min-w-[180px] py-1 rounded-md text-white duration-300 shadow-md shadow-gray-400'
+        className='NAVBAR_USER_NAVIGATION_SHORTCUTS_LANGUAGE_TOGGLE_BUTTON bg-gray-500 hover:bg-gray-400 min-w-[180px] py-1 rounded-md text-white duration-300 shadow-md shadow-gray-400'
         onClick={toggleLanguage}
       >
         {language === 'en' ? 'Русский' : 'English'}

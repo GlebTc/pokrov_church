@@ -11,7 +11,7 @@ const NewsMain = ({ user }: { user: any }) => {
   const [newPostModal, setNewPostModal] = useState(false);
   const [deletedPostIds, setDeletedPostIds] = useState<string[]>([]);
   const { language } = useLanguageStore();
-  const { news, fetchNews, isLoading, deletePost } = useNewsStore();
+  const { news, fetchNews, isLoading } = useNewsStore();
 
   useEffect(() => {
     setTimeout(() => {
@@ -19,8 +19,9 @@ const NewsMain = ({ user }: { user: any }) => {
     }, 1000);
   }, [newPostModal || deletedPostIds]);
 
-    // Sort news articles by createdAt timestamp from newest to oldest
-    const sortedNews = news.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  // Sort news articles by createdAt timestamp from newest to oldest
+  const sortedNews = news.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
 
   return (
     <div className='flex flex-col bg-white justify-around'>
@@ -33,7 +34,7 @@ const NewsMain = ({ user }: { user: any }) => {
         </div>
       </div>
 
-      <div className='flex flex-col justify-center items-start px-12 md:px-8'>
+      <div className='flex flex-col justify-center items-start px-4 md:px-8'>
         {isLoading ? (
           <Loading message="Updating Posts..."/>
         ) : (
@@ -43,7 +44,7 @@ const NewsMain = ({ user }: { user: any }) => {
                 <IndividualNewsPost
                   key={post.id}
                   id={post.id}
-                  createdAt={post.created_at}
+                  created_at={post.created_at}
                   title={post.title}
                   author={post.author}
                   content={post.content}

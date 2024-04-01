@@ -10,7 +10,7 @@ import EditPost from './EditPost';
 interface IndividualNewsPostProps {
   user: any;
   id: string;
-  createdAt: string;
+  created_at: string;
   title: string;
   author: string;
   content: string;
@@ -21,7 +21,7 @@ interface IndividualNewsPostProps {
 const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
   user,
   id,
-  createdAt,
+  created_at,
   title,
   author,
   content,
@@ -71,7 +71,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
       <div className='mt-4'>
         <h1 className='text-3xl font-bold'>{title}</h1>
         <p className='text-sm text-gray-500 mb-2'>
-          Posted by {author} on {formatDate(createdAt)}{' '}
+          Posted by {author} on {formatDate(created_at)}{' '}
         </p>
         <div
           className={`text-lg text-justify ${
@@ -92,7 +92,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
           </button>
         </div>
         {user && (
-          <div className='flex gap-4'>
+          <div className='flex flex-col justify-center items-center md:flex-row gap-4'>
             <div
               onClick={handleDelete}
               className='flex items-center'
@@ -114,7 +114,7 @@ const IndividualNewsPost: React.FC<IndividualNewsPostProps> = ({
           user={user}
           key={id}
           id={id}
-          createdAt={createdAt}
+          createdAt={created_at}
           title={title}
           author={author}
           content={content}
