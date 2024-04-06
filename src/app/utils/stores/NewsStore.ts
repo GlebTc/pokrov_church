@@ -46,6 +46,8 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
       .from('News')
       .delete()
       .eq('id', id);
+
+    
     if (data) {
       set({ news: [...data] });
     }

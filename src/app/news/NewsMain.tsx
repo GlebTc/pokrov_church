@@ -17,7 +17,7 @@ const NewsMain = ({ user }: { user: any }) => {
     setTimeout(() => {
       fetchNews();
     }, 1000);
-  }, [newPostModal || deletedPostIds]);
+  }, [news]);
 
   // Sort news articles by createdAt timestamp from newest to oldest
   const sortedNews = news

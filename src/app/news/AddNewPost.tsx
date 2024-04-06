@@ -190,7 +190,7 @@ const AddNewPost = ({
             name='imageUpload'
             accept='image/*'
             onChange={handleImageUpload}
-            className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'
+            className={`mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 file:border-none file:bg-blue-500 file:hover:bg-blue-600 file:cursor-pointer file:text-white file:rounded-md file:duration-300`}
           />
         </div>
 

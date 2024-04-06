@@ -33,10 +33,12 @@ const EditPost = ({
     id: id,
     created_at: '',
     title: title,
-    content: '',
+    content: content,
     author: user.email,
     imageUrl: '',
   });
+  const { editPost } = useNewsStore();
+  
 
   const handleContentChange = (contentInput: any) => {
     setFormData((prevData) => ({
@@ -45,7 +47,7 @@ const EditPost = ({
     }));
   };
 
-  const { createNewsPost } = useNewsStore();
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -61,7 +63,7 @@ const EditPost = ({
     e.preventDefault();
 
     const newsPost: NewsType = {
-      id: '',
+      id: formData.id,
       created_at: new Date().toISOString(), // Set the current timestamp
       title: formData.title,
       content: formData.content,
@@ -70,7 +72,7 @@ const EditPost = ({
     };
 
     try {
-      createNewsPost(newsPost);
+      editPost(id,newsPost);
 
       setFormData({
         id: '',
@@ -196,7 +198,7 @@ const EditPost = ({
             type='submit'
             className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 max-w-[200px]'
           >
-            {language === 'en' ? 'Add New Post' : 'Добавить новость'}
+            {language === 'en' ? 'Edit Post' : 'Редактировать новость'}
           </button>
           <button
             className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 max-w-[200px]'

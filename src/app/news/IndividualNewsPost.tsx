@@ -8,17 +8,6 @@ import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import EditPost from './EditPost';
 import { NewsType } from '../utils/types/newsTypes';
 
-// interface IndividualNewsPostProps {
-//   user: any;
-//   id: string;
-//   created_at: string;
-//   title: string;
-//   author: string;
-//   content: string;
-//   imageUrl: string;
-//   setDeletedPostIds: React.Dispatch<React.SetStateAction<string[]>>;
-// }
-
 const IndividualNewsPost: React.FC<any | NewsType> = ({
   user,
   id,
@@ -46,6 +35,7 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
   const handleDelete = async () => {
     setDeletedPostIds((prevIds: any) => [...prevIds, id]);
     deletePost(id);
+    
   };
 
   const handleEdit = () => {

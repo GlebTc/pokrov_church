@@ -5,10 +5,14 @@ import StarterKit from '@tiptap/starter-kit';
 import Toolbar from "./Toolbar";
 
 const Tiptap = ({ onChange, content }: any) => {
+
   const handleChange = (newContent: string) => {
     onChange(newContent);
   };
+
+
   const editor = useEditor({
+    content: content,
     extensions: [StarterKit],
     editorProps: {
       attributes: {
@@ -20,6 +24,8 @@ const Tiptap = ({ onChange, content }: any) => {
       handleChange(editor.getHTML());
     },
   });
+
+
 
   return <div>
     <Toolbar editor={editor} content={content} />
