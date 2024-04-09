@@ -9,6 +9,10 @@ import { NewsType } from '../../utils/types/newsTypes';
 
 /* ==============================TEST============================== 
 
+ import ImageUpload from '@/src/app/components/reusable/ImageUpload';
+
+ const [addImageModal, setAddImageModal] = useState(false);
+
   <div className='ADD_IMAGE_BUTTON flex justify-start w-[90dvw] md:w-[70dvw] mt-4'>
     <button
       className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 w-[200px] mb-4'

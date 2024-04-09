@@ -1,4 +1,6 @@
 {
-  "en": ["Holy Protection of the Mother of God Church"],
-  "ru": ["Храм Покрова Пресвятой Богородицы"]
+  "title": {
+    "en": ["Holy Protection of the Mother of God Church"],
+    "ru": ["Храм Покрова Пресвятой Богородицы"]
+  }
 }

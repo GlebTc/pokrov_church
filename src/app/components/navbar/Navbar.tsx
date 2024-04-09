@@ -1,6 +1,6 @@
 import NavbarClientComponents from './NavbarClientComponents';
 import LogInLogoutButton from './LogInLogoutButton';
-import NavbarUserNavShortcuts from './NavbarUserNavShortcuts';
+import NavbarUserNavShortcuts from '@/src/app/components/navbar/NavbarUserNavShortcuts';
 
 NavbarClientComponents;
 

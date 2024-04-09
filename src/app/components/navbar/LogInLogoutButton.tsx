@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { RiAdminFill } from 'react-icons/ri';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import Logout from '../../(protected)/Logout';
+import Logout from '@/src/app/(protected)/Logout';
 
 const LogInLogoutButton = async () => {
   const cookieStore = cookies();
@@ -11,8 +11,6 @@ const LogInLogoutButton = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  // console.log({ user });
 
   if (!user) {
     return (

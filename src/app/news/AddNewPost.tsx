@@ -85,7 +85,7 @@ const AddNewPost = ({
   };
 
   return (
-    <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-600/90 w-full p-8 text-white z-[120]'>
+    <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-600/90 w-full p-8 text-white z-[40]'>
       <h2 className='text-2xl font-bold mb-4'>
         {language === 'en' ? 'Add New Post' : 'Добавить новость'}
       </h2>
@@ -157,7 +157,7 @@ const AddNewPost = ({
               required
             />
           </div>
-          <div className='mb-4'>
+          <div className='mb-4 max-h-[15dvh] overflow-scroll'>
             <label
               htmlFor='content'
               className='block text-sm font-medium'

@@ -67,7 +67,8 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
       <div className='mt-4'>
         <h1 className='text-3xl font-bold'>{title}</h1>
         <p className='text-sm text-gray-500 mb-2'>
-          Posted by {author} on {formatDate(created_at)}{' '}
+          Posted by <span className='text-blue-500'>{author}</span> on{' '}
+          <span className='text-blue-500'>{formatDate(created_at)}</span>
         </p>
         <div
           className={`text-lg text-justify ${
@@ -79,7 +80,7 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
         ></div>
         <div className='flex justify-end'>
           <button
-            className='text-blue-400 hover:text-blue-500 duration-300'
+            className='text-blue-500 hover:text-blue-600 duration-300'
             onClick={toggleReadMore}
           >
             {readMore

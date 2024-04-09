@@ -10,7 +10,7 @@ const SideBar = () => {
   return (
     <div className='flex flex-col items-center text-center gap-4'>
       <h3>
-        {language === 'en' ? side_bar_content.en[0] : side_bar_content.ru[0]}
+        {language === 'en' ? side_bar_content.title.en[0] : side_bar_content.title.ru[0]}
       </h3>
       <a
         href='/'

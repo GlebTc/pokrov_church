@@ -31,14 +31,14 @@ const NavMobileMenu = ({
       <div
         className={
           mobileMenu
-            ? 'MOBILE_MENU_OVERLAY md:hidden fixed left-0 top-0 w-full h-screen bg-black/60 z-[50]'
+            ? 'MOBILE_MENU_OVERLAY md:hidden fixed left-0 top-0 w-full h-screen bg-black/60 z-[20]'
             : 'hidden'
         }
       ></div>
       <div
         className={
           mobileMenu
-            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-screen h-screen bg-gray-400 ease-in duration-[1000ms] z-[50]'
+            ? 'MOBILE_MENU md:hidden fixed right-0 top-0 w-screen h-screen bg-gray-400 ease-in duration-[1000ms] z-[20]'
             : 'MOBILE_MENU md:hidden fixed right-[-100%] top-0 w-screen h-screen bg-gray-400 ease-in duration-[1000ms]'
         }
       >
@@ -66,10 +66,10 @@ const NavMobileMenu = ({
                 </Link>
                 {item.subMenu && (
                   <ul
-                    className={`MOBILE_MENU_SUBMENU_MAIN_CONTAINER absolute top-0 ${language === 'en' ? 'left-[138px] w-fit' : 'left-[160px] w-fit min-w-[240px]'} bg-gray-300 text-black z-[100] rounded-md shadow-md shadow-gray-600${
+                    className={`MOBILE_MENU_SUBMENU_MAIN_CONTAINER absolute top-0 ${language === 'en' ? 'left-[138px] w-fit' : 'left-[160px] w-fit min-w-[240px]'} bg-gray-300 text-black z-[30] rounded-md shadow-md shadow-gray-600${
                       activeSubMenu === index
-                        ? ' z-[100] opacity-100 transition-opacity duration-[500ms]'
-                        : ' z-[100] opacity-0 transition-opacity duration-[500ms]'
+                        ? ' z-[30] opacity-100 transition-opacity duration-[500ms]'
+                        : ' z-[30] opacity-0 transition-opacity duration-[500ms]'
                     }`}
                   >
                     {item.subMenu.map((subItem, subIndex) => (
