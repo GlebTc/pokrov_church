@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import { useNewsStore } from '@/src/app/utils/stores/NewsStore';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { NewsType } from '../utils/types/newsTypes';
-import Loading from '../components/reusable/Loading';
 import Tiptap from '../components/reusable/textEditor.tsx/Tiptap';
+import ImageUpload from '../components/reusable/ImageUpload';
+import Image from 'next/image';
 
 const AddNewPost = ({
   setNewPostModal,
@@ -14,9 +14,9 @@ const AddNewPost = ({
   setNewPostModal: any;
   user: any;
 }) => {
-  const [imageUploading, setImageUploading] = useState<boolean>(false);
+  const [addImageModal, setAddImageModal] = useState<boolean>(false);
   const { language } = useLanguageStore();
-  const supabase = createClientComponentClient();
+
   const [formData, setFormData] = useState<NewsType>({
     id: '',
     title: '',
@@ -72,64 +72,6 @@ const AddNewPost = ({
     } catch (error) {}
   };
 
-  // Check if the file already exists in the storage bucket and return a modified file name if needed
-  const checkFileExists = async (file: File): Promise<string | null> => {
-    const { data: fileList, error: fileListError } = await supabase.storage
-      .from('news_post_images')
-      .list('');
-
-    if (fileList && fileListError === null) {
-      const fileExists = fileList.find((item) => item.name === file.name);
-      if (fileExists) {
-        const fileExt = file.name.split('.').pop(); // Get file extension
-        let modifiedFileName: string | null = null;
-        let index = 1;
-        do {
-          modifiedFileName = `${file.name.replace(`.${fileExt}`, '')}_${index
-            .toString()
-            .padStart(3, '0')}.${fileExt}`;
-          const fileWithIndexExists = fileList.find(
-            (item) => item.name === modifiedFileName
-          );
-          if (fileWithIndexExists) {
-            index++;
-          } else {
-            return modifiedFileName;
-          }
-        } while (modifiedFileName);
-      }
-    }
-
-    return null;
-  };
-
-  // Handle Image Upload Function to Supabase Storage
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImageUploading(true);
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Check if the file already exists in the storage bucket
-    const modifiedFileName = await checkFileExists(file);
-    const uploadFileName = modifiedFileName || file.name;
-
-    const { data, error } = await supabase.storage
-      .from('news_post_images')
-      .upload(uploadFileName, file);
-
-    if (error) {
-      console.error('Error uploading file:', error);
-      return;
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
-      imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news_post_images/${data?.path}`,
-    }));
-
-    setImageUploading(false);
-  };
-
   const handleCloseModal = () => {
     setFormData({
       id: '',
@@ -147,7 +89,38 @@ const AddNewPost = ({
       <h2 className='text-2xl font-bold mb-4'>
         {language === 'en' ? 'Add New Post' : 'Добавить новость'}
       </h2>
-      {imageUploading && <Loading message='Uploading Image...' />}
+      <div className='ADD_IMAGE_CONTAINER flex justify-start w-[90dvw] md:w-[70dvw] mt-4'>
+        {addImageModal && (
+          <ImageUpload
+            setAddImageModal={setAddImageModal}
+            setFormData={setFormData}
+            formData={formData}
+          />
+        )}
+      </div>
+      <div>
+        {formData.imageUrl && (
+          <div className='w-[200px] '>
+            <Image
+              src={formData.imageUrl}
+              alt={formData.title}
+              width={200}
+              height={200}
+              className='rounded-md'
+            />
+          </div>
+        )}
+      </div>
+      <button
+        className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 w-[200px] mt-4'
+        onClick={() => setAddImageModal(true)}
+      >
+        {language === 'en'
+          ? formData.imageUrl
+            ? 'Change Image'
+            : 'Add Image'
+          : 'Добавить изображение'}
+      </button>
       <form onSubmit={handleSubmit}>
         <div className='FORM_CONTAINER mb-4 w-[90dvw] md:w-[70dvw]'>
           <div className='mb-4'>
@@ -216,32 +189,6 @@ const AddNewPost = ({
               required
             />
           </div>
-        </div>
-
-        <div className='IMAGE_UPLOAD_CONTAINER mb-4'>
-          <label
-            htmlFor='imageUpload'
-            className='block text-sm font-medium'
-          >
-            {language === 'en' ? 'Upload Image' : 'Загрузить изображение'}
-          </label>
-          <input
-            type='file'
-            id='imageUpload'
-            name='imageUpload'
-            accept='image/*'
-            onChange={handleImageUpload}
-            className={`mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 file:border-none file:bg-blue-500 file:hover:bg-blue-600 file:cursor-pointer file:text-white file:rounded-md file:duration-300`}
-          />
-          {formData.imageUrl && (
-            <div className='mt-4'>
-              <img
-                src={formData.imageUrl}
-                alt='Uploaded Image'
-                className='w-[200px] rounded-md'
-              />
-            </div>
-          )}
         </div>
 
         <div className='ADD_NEW_POST_BUTTONS_CONTAINER flex flex-col gap-4'>
