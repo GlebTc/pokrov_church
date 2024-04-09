@@ -44,9 +44,10 @@ const AddNewPost = ({
     }));
   };
 
+  // Handle Submit Function
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    // Create a New post object
     const newsPost: NewsType = {
       id: '',
       created_at: formData.created_at,
@@ -55,7 +56,7 @@ const AddNewPost = ({
       author: user.email,
       imageUrl: formData.imageUrl,
     };
-
+    // Send a POST request using the createNewsPost function from newsStore, clear the form data and close the modal.
     try {
       createNewsPost(newsPost);
       setFormData({
@@ -71,23 +72,62 @@ const AddNewPost = ({
     } catch (error) {}
   };
 
+  // Check if the file already exists in the storage bucket and return a modified file name if needed
+  const checkFileExists = async (file: File): Promise<string | null> => {
+    const { data: fileList, error: fileListError } = await supabase.storage
+      .from('news_post_images')
+      .list('');
+
+    if (fileList && fileListError === null) {
+      const fileExists = fileList.find((item) => item.name === file.name);
+      if (fileExists) {
+        const fileExt = file.name.split('.').pop(); // Get file extension
+        let modifiedFileName: string | null = null;
+        let index = 1;
+        do {
+          modifiedFileName = `${file.name.replace(`.${fileExt}`, '')}_${index
+            .toString()
+            .padStart(3, '0')}.${fileExt}`;
+          const fileWithIndexExists = fileList.find(
+            (item) => item.name === modifiedFileName
+          );
+          if (fileWithIndexExists) {
+            index++;
+          } else {
+            return modifiedFileName;
+          }
+        } while (modifiedFileName);
+      }
+    }
+
+    return null;
+  };
+
+  // Handle Image Upload Function to Supabase Storage
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageUploading(true);
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Check if the file already exists in the storage bucket
+    const modifiedFileName = await checkFileExists(file);
+    const uploadFileName = modifiedFileName || file.name;
+
     const { data, error } = await supabase.storage
       .from('news_post_images')
-      .upload(`${file.name}`, file);
+      .upload(uploadFileName, file);
+
+    if (error) {
+      console.error('Error uploading file:', error);
+      return;
+    }
 
     setFormData((prevData) => ({
       ...prevData,
       imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news_post_images/${data?.path}`,
     }));
-    setTimeout(() => {
-      setImageUploading(false);
-    }, 2000);
-    console.log(formData.imageUrl);
+
+    setImageUploading(false);
   };
 
   const handleCloseModal = () => {
@@ -177,6 +217,7 @@ const AddNewPost = ({
             />
           </div>
         </div>
+
         <div className='IMAGE_UPLOAD_CONTAINER mb-4'>
           <label
             htmlFor='imageUpload'

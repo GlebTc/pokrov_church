@@ -1,12 +1,13 @@
 'use client';
 import Image from 'next/image';
 import { useNewsStore } from '../utils/stores/NewsStore';
-import DeletePostButton from './DeletePostButton';
-import EditPostButton from './EditPostButton';
+import DeletePostButton from './(postButtons)/DeletePostButton';
+import EditPostButton from './(postButtons)/EditPostButton';
 import { useState } from 'react';
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import EditPost from './EditPost';
 import { NewsType } from '../utils/types/newsTypes';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const IndividualNewsPost: React.FC<any | NewsType> = ({
   user,
@@ -22,6 +23,7 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
   const [readMore, setReadMore] = useState<boolean>(false);
   const { language } = useLanguageStore();
   const [editPostModal, setEditPostModal] = useState(false);
+  const supabase = createClientComponentClient();
 
   // Function to format the date
   const formatDate = (dateString: string) => {
@@ -34,8 +36,11 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
 
   const handleDelete = async () => {
     setDeletedPostIds((prevIds: any) => [...prevIds, id]);
+    const { data, error } = await supabase.storage
+      .from('news_post_images')
+      .remove([imageUrl.split('/').pop()]);
+    console.log(data, error);
     deletePost(id);
-    
   };
 
   const handleEdit = () => {

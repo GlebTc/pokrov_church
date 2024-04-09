@@ -9,6 +9,7 @@ interface NewsStoreProps {
   createNewsPost: (newsPost: NewsType) => void;
   deletePost: (id: string) => void;
   editPost: (id: string, newsPost: NewsType) => void;
+  getIndividualPost: (id: string) => void;
 }
 
 const supabaseNews = createClient(
@@ -66,4 +67,10 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
       set({ news: [...data] });
     }
   },
+  getIndividualPost: async (id) => {
+    const { data, error } = await supabaseNews.from('News').select('*').eq('id', id);
+    if (data) {
+      set({ news: [...data] });
+    }
+  }
 }));

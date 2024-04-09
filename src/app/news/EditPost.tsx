@@ -35,10 +35,9 @@ const EditPost = ({
     title: title,
     content: content,
     author: user.email,
-    imageUrl: '',
+    imageUrl: imageUrl,
   });
   const { editPost } = useNewsStore();
-  
 
   const handleContentChange = (contentInput: any) => {
     setFormData((prevData) => ({
@@ -46,8 +45,6 @@ const EditPost = ({
       content: contentInput,
     }));
   };
-
-
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,7 +69,7 @@ const EditPost = ({
     };
 
     try {
-      editPost(id,newsPost);
+      editPost(id, newsPost);
 
       setFormData({
         id: '',
@@ -87,7 +84,7 @@ const EditPost = ({
     } catch (error) {}
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpdate = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageUploading(true);
     const file = e.target.files?.[0];
     if (!file) return;
@@ -103,7 +100,6 @@ const EditPost = ({
     setTimeout(() => {
       setImageUploading(false);
     }, 2000);
-    console.log(formData.imageUrl);
   };
 
   const handleCloseModal = () => {
@@ -117,6 +113,8 @@ const EditPost = ({
     });
     setEditPostModal(false);
   };
+
+  // console.log(formData.imageUrl)
 
   return (
     <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-900/90 w-full p-8 text-white z-[120]'>
@@ -188,7 +186,7 @@ const EditPost = ({
             id='imageUpload'
             name='imageUpload'
             accept='image/*'
-            onChange={handleImageUpload}
+            onChange={handleImageUpdate}
             className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500'
           />
         </div>

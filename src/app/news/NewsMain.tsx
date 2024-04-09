@@ -4,7 +4,7 @@ import { useNewsStore } from '../utils/stores/NewsStore';
 import { useEffect, useState } from 'react';
 import IndividualNewsPost from '@/src/app/news/IndividualNewsPost';
 import Loading from '../components/reusable/Loading';
-import AddNewPostButton from './AddNewPostButton';
+import AddNewPostButton from './(postButtons)/AddNewPostButton';
 import AddNewPost from './AddNewPost';
 
 const NewsMain = ({ user }: { user: any }) => {
