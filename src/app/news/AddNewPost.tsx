@@ -143,7 +143,7 @@ const AddNewPost = ({
   };
 
   return (
-    <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-900/90 w-full p-8 text-white z-[120]'>
+    <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-600/90 w-full p-8 text-white z-[120]'>
       <h2 className='text-2xl font-bold mb-4'>
         {language === 'en' ? 'Add New Post' : 'Добавить новость'}
       </h2>
@@ -233,6 +233,15 @@ const AddNewPost = ({
             onChange={handleImageUpload}
             className={`mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 file:border-none file:bg-blue-500 file:hover:bg-blue-600 file:cursor-pointer file:text-white file:rounded-md file:duration-300`}
           />
+          {formData.imageUrl && (
+            <div className='mt-4'>
+              <img
+                src={formData.imageUrl}
+                alt='Uploaded Image'
+                className='w-[200px] rounded-md'
+              />
+            </div>
+          )}
         </div>
 
         <div className='ADD_NEW_POST_BUTTONS_CONTAINER flex flex-col gap-4'>

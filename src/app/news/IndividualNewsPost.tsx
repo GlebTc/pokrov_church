@@ -39,7 +39,7 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
     const { data, error } = await supabase.storage
       .from('news_post_images')
       .remove([imageUrl.split('/').pop()]);
-    console.log(data, error);
+
     deletePost(id);
   };
 

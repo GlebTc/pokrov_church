@@ -11,9 +11,7 @@ const EditPost = ({
   setEditPostModal,
   user,
   id,
-  createdAt,
   title,
-  author,
   content,
   imageUrl,
 }: {

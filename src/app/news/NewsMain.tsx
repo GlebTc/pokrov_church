@@ -6,9 +6,11 @@ import IndividualNewsPost from '@/src/app/news/IndividualNewsPost';
 import Loading from '../components/reusable/Loading';
 import AddNewPostButton from './(postButtons)/AddNewPostButton';
 import AddNewPost from './AddNewPost';
+import ImageUpload from '../components/reusable/ImageUpload';
 
 const NewsMain = ({ user }: { user: any }) => {
   const [newPostModal, setNewPostModal] = useState(false);
+  const [addImageModal, setAddImageModal] = useState(false);
   const [deletedPostIds, setDeletedPostIds] = useState<string[]>([]);
   const { language } = useLanguageStore();
   const { news, fetchNews, isLoading } = useNewsStore();
@@ -33,6 +35,7 @@ const NewsMain = ({ user }: { user: any }) => {
         <h2 className='text-3xl font-semibold md:mb-8'>
           {language === 'en' ? 'News' : 'Новости'}
         </h2>
+
         <div onClick={() => setNewPostModal(true)}>
           {user && <AddNewPostButton />}
         </div>
