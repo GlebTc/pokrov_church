@@ -6,7 +6,7 @@ interface SchedulePostsStoreProps {
   schedulePosts: SchedulePostTypes[];
   fetchSchedulePosts: () => void;
   isLoading?: boolean;
-  //   createSchedulePost: (schedulePost: SchedulePostTypes) => void;
+  createSchedulePost: (schedulePost: SchedulePostTypes) => void;
   //   deletePost: (id: string) => void;
   //   editPost: (id: string, schedulePost: SchedulePostTypes) => void;
   //   getIndividualPost: (id: string) => void;
@@ -27,6 +27,22 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
     if (schedulePosts) {
       set({ schedulePosts });
       set({ isLoading: false });
+    }
+  },
+  createSchedulePost: async (newSchedulePostFormData: SchedulePostTypes) => {
+
+    const { data, error } = await supabaseSchedule
+      .from('schedule_posts')
+      .insert([{
+        title: newSchedulePostFormData.title,
+        author: newSchedulePostFormData.author,
+        scheduleImageUrl: newSchedulePostFormData.scheduleImageUrl,
+        created_at: newSchedulePostFormData.created_at,
+      }]);
+    if (data) {
+      set((state) => ({
+        schedulePosts: [...state.schedulePosts, newSchedulePostFormData],
+      }));
     }
   },
 }));
