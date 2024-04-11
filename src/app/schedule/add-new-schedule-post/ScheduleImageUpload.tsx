@@ -6,6 +6,7 @@ import { useLanguageStore } from '../../utils/stores/languageStore';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { IoMdCloudUpload } from 'react-icons/io';
 import Image from 'next/image';
+import Loading from '@/src/app/components/reusable/Loading';
 
 const ScheduleImageUpload = ({
   setAddImageModal,
@@ -20,6 +21,7 @@ const ScheduleImageUpload = ({
   const { language } = useLanguageStore();
   const [image, setImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   // Handle Image Change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +68,7 @@ const ScheduleImageUpload = ({
 
   // Handle Image Upload
   const handleUploadImage = async () => {
+    setIsUploading(true);
     if (!file) return;
 
     const modifiedFileName = await checkFileExists(file);
@@ -84,12 +87,13 @@ const ScheduleImageUpload = ({
       ...prevData,
       scheduleImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/schedule_post_images/${data?.path}`,
     }));
-
+    setIsUploading(false);
     setAddImageModal(false);
   };
 
   return (
     <div className='z-[1000] fixed top-0 left-0 w-screen h-screen bg-gray-800 flex flex-col justify-center items-center'>
+      {isUploading && <Loading message='Uploading Image...' />}
       <div className='absolute top-5 right-5 flex justify-end p-4'>
         <AiFillCloseCircle
           className='text-3xl text-white cursor-pointer'

@@ -16,10 +16,14 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
   return (
     <div
       key={id}
-      className='flex flex-col gap-4'
+      className='flex flex-col mt-8'
     >
-      <h3 className='text-xl font-semibold text-center '>{title}</h3>
-
+      <h3 className='text-xl font-semibold text-center mb-4'>{title}</h3>
+      <p className='mb-4 text-center'>
+        Posted on{' '}
+        <span className='text-blue-500'>{formatPostDate(created_at)}</span> by{' '}
+        <span className='text-blue-500'>{author}</span>
+      </p>
       <div className='w-full flex justify-center'>
         <Image
           onClick={() => setIndividualScheduleModal(true)}
@@ -30,12 +34,6 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
           className='rounded-md p-1 border-2 object-contain cursor-pointer'
         />
       </div>
-
-      <p>
-        Posted on{' '}
-        <span className='text-blue-500'>{formatPostDate(created_at)}</span> by{' '}
-        <span className='text-blue-500'>{author}</span>
-      </p>
       {individualScheduleModal && (
         <ScheduleModal
           setIndividualScheduleModal={() => setIndividualScheduleModal(false)}

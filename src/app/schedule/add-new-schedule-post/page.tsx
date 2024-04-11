@@ -7,10 +7,13 @@ import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/Schedu
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-const AddNewSchedulePost = () => {
+
+const AddNewSchedulePost = async () => {
   const { language } = useLanguageStore();
   const router = useRouter();
   const { createSchedulePost } = useSchedulePostsStore();
+
+  // States
   const [addImageModal, setAddImageModal] = useState(false);
   const [newSchedulePostFormData, setNewSchedulePostFormData] =
     useState<SchedulePostTypes>({
@@ -43,6 +46,11 @@ const AddNewSchedulePost = () => {
       scheduleImageUrl: '',
       created_at: '',
     });
+    router.push('/schedule');
+  };
+
+  // Cancel Function
+  const handleCancel = () => {
     router.push('/schedule');
   };
 
@@ -136,6 +144,12 @@ const AddNewSchedulePost = () => {
           onClick={handleSubmit}
         >
           {language === 'en' ? 'Add New Schedule Post' : 'Добавить расписание'}
+        </button>
+        <button
+          className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 duration-300'
+          onClick={handleCancel}
+        >
+          {language === 'en' ? 'Cancel' : 'Отменить'}
         </button>
       </div>
     </div>

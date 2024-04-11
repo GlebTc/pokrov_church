@@ -65,7 +65,7 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
       )}
 
       <div className='mt-4'>
-        <h1 className='text-3xl font-bold'>{title}</h1>
+        <h3 className='text-3xl font-bold'>{title}</h3>
         <p className='text-sm text-gray-500 mb-2'>
           Posted by <span className='text-blue-500'>{author}</span> on{' '}
           <span className='text-blue-500'>{formatDate(created_at)}</span>

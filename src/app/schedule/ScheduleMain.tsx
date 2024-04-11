@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
+
 import Loading from '@/src/app/components/reusable/Loading';
 import IndividualSchedulePost from './IndividualSchedulePost';
-import AddNewSchedulePost from '@/src/app/schedule/add-new-schedule-post/AddNewSchedulePostButton';
+import AddNewSchedulePostButton from '@/src/app/schedule/add-new-schedule-post/AddNewSchedulePostButton';
 import Link from 'next/link';
 
 const ScheduleMain = ({ user }: { user: any }) => {
@@ -13,18 +14,27 @@ const ScheduleMain = ({ user }: { user: any }) => {
   const { schedulePosts, fetchSchedulePosts, isLoading } =
     useSchedulePostsStore();
 
+  // Fetch updated schedule posts on render
   useEffect(() => {
     fetchSchedulePosts();
-  }, []);
+  }, [schedulePosts]);
+
+  // Sort news articles by createdAt timestamp from newest to oldest
+  const sortedSchedulePosts = schedulePosts
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
 
   return (
     <div className='bg-white w-full p-8 flex flex-col gap-4'>
-      <div className='flex justify-between'>
-        <h2 className='text-3xl font-semibold mb-8'>
+      <div className='flex flex-col justify-center items-center md:flex-row md:justify-between md:items-start'>
+        <h2 className='text-3xl font-semibold mb-4'>
           {language === 'en' ? 'Schedule' : 'Расписание'}
         </h2>
         <Link href='/schedule/add-new-schedule-post'>
-          {user && <AddNewSchedulePost />}
+          {user && <AddNewSchedulePostButton />}
         </Link>
       </div>
 
@@ -32,8 +42,8 @@ const ScheduleMain = ({ user }: { user: any }) => {
         <Loading message='Retrieving Updated Schedule...' />
       ) : (
         <div>
-          {schedulePosts &&
-            schedulePosts.map((post: SchedulePostTypes) => (
+          {sortedSchedulePosts &&
+            sortedSchedulePosts.map((post: SchedulePostTypes) => (
               <IndividualSchedulePost
                 key={post.id}
                 id={post.id}
