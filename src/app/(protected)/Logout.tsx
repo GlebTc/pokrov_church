@@ -1,28 +1,16 @@
 'use client';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useRouter } from 'next/navigation';
+
 import { RiLogoutBoxLine } from 'react-icons/ri';
+import Link from 'next/link';
 
 const Logout = () => {
-  const supabase = createClientComponentClient();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      router.refresh();
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
-
   return (
-    <button
-      onClick={handleSignOut}
+    <Link
+      href='/login'
       className='absolute top-4 left-4 md:top-2 md:left-2 bg-red-500 hover:bg-red-400 p-1 rounded-md text-white z-[10]'
     >
       <RiLogoutBoxLine size={30} />
-    </button>
+    </Link>
   );
 };
 

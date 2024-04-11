@@ -5,7 +5,8 @@
 ## Fixes to Implement
 
 - The Our Parish Desktop Menu will activate on hover on the subMenu, should only hover when onEnter on the Menu Item.
-- For add-new-schedule-post I have to create the base page that retrieves user infromation from the server and prop drill it through.
+- Structure proper image delete and patch process for db
+- The logout button I have in the navbar has to be moved as it creates a Multiple GoTrueClient error when I render pages that take in user data (posts, schedule)
 
 ## Architecture
 

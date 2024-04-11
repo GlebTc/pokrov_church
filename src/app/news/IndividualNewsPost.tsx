@@ -50,6 +50,7 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
   const toggleReadMore = () => {
     setReadMore(!readMore);
   };
+  
   return (
     <div className='INDIVIDUAL_NEWS_POST_CONTAINER max-w-4xl mx-auto my-8'>
       {imageUrl && (
