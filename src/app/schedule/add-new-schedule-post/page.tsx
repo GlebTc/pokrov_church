@@ -7,8 +7,7 @@ import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/Schedu
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-
-const AddNewSchedulePost = async () => {
+const AddNewSchedulePost = () => {
   const { language } = useLanguageStore();
   const router = useRouter();
   const { createSchedulePost } = useSchedulePostsStore();

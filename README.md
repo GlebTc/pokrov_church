@@ -4,7 +4,8 @@
 
 ## Fixes to Implement
 
-- The Our Parish Desktop Menu will activate on hover on the subMenu, should only hover when onEnter on the Menu Item
+- The Our Parish Desktop Menu will activate on hover on the subMenu, should only hover when onEnter on the Menu Item.
+- For add-new-schedule-post I have to create the base page that retrieves user infromation from the server and prop drill it through.
 
 ## Architecture
 

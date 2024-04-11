@@ -32,6 +32,12 @@ const LoginComponent = ({ user }: { user: User | null }) => {
     router.refresh();
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSignIn();
+    }
+  };
+
   if (user)
     return (
       <LoggedInComponent
@@ -40,6 +46,7 @@ const LoginComponent = ({ user }: { user: User | null }) => {
       />
     );
 
+ 
   return (
     <div className='flex flex-col gap-2'>
       <form className='flex flex-col gap-2'>
@@ -69,6 +76,7 @@ const LoginComponent = ({ user }: { user: User | null }) => {
           value={loginCredentials.password}
           className='border border-gray-300 rounded-md px-3 py-2 mb-4'
           placeholder='Password'
+          onKeyPress={handleKeyPress}
         />
       </form>
       <button

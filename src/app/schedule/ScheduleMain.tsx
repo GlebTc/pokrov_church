@@ -45,6 +45,7 @@ const ScheduleMain = ({ user }: { user: any }) => {
           {sortedSchedulePosts &&
             sortedSchedulePosts.map((post: SchedulePostTypes) => (
               <IndividualSchedulePost
+                user={user}
                 key={post.id}
                 id={post.id}
                 created_at={post.created_at}
