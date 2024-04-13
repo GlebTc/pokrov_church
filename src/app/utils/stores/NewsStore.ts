@@ -21,14 +21,14 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
   news: [],
   isLoading: true,
   fetchNews: async () => {
-    const { data: news, error } = await supabaseNews.from('News').select('*');
+    const { data: news, error } = await supabaseNews.from('news_posts').select('*');
     if (news) {
       set({ news });
       set({ isLoading: false });
     }
   },
   createNewsPost: async (newsPost) => {
-    const { data, error } = await supabaseNews.from('News').insert([
+    const { data, error } = await supabaseNews.from('news_posts').insert([
       {
         title: newsPost.title,
         content: newsPost.content,
@@ -44,7 +44,7 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
   },
   deletePost: async (id) => {
     const { data, error } = await supabaseNews
-      .from('News')
+      .from('news_posts')
       .delete()
       .eq('id', id);
 
@@ -55,7 +55,7 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
   },
   editPost: async (id, newsPost) => {
     const { data, error } = await supabaseNews
-      .from('News')
+      .from('news_posts')
       .update({
         title: newsPost.title,
         author: newsPost.author,
@@ -68,7 +68,7 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
     }
   },
   getIndividualPost: async (id) => {
-    const { data, error } = await supabaseNews.from('News').select('*').eq('id', id);
+    const { data, error } = await supabaseNews.from('news_posts').select('*').eq('id', id);
     if (data) {
       set({ news: [...data] });
     }

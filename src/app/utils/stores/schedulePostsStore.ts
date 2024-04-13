@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
-import { createClient } from '@supabase/supabase-js';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface SchedulePostsStoreProps {
   schedulePosts: SchedulePostTypes[];
@@ -12,10 +12,7 @@ interface SchedulePostsStoreProps {
   getIndividualPost: (id: string) => void;
 }
 
-const supabaseSchedule = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+const supabaseSchedule = createClientComponentClient();
 
 export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
   schedulePosts: [],
@@ -47,6 +44,19 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
     }
   },
   deletePost: async (id: string) => {
+
+    const { data: postData, error: postError } = await supabaseSchedule
+      .from('schedule_posts')
+      .select('scheduleImageUrl')
+      .eq('id', id)
+      .single();
+
+    if (postData && postData.scheduleImageUrl) {
+      const { data, error } = await supabaseSchedule.storage
+        .from('schedule_post_images')
+        .remove([postData.scheduleImageUrl.split('/').pop()]);
+    }
+
     const { data, error } = await supabaseSchedule
       .from('schedule_posts')
       .delete()

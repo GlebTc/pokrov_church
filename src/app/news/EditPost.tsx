@@ -112,7 +112,7 @@ const EditPost = ({
     setEditPostModal(false);
   };
 
-  // console.log(formData.imageUrl)
+
 
   return (
     <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER fixed inset-0 flex flex-col justify-center items-center bg-gray-900/90 w-full p-8 text-white z-[120]'>

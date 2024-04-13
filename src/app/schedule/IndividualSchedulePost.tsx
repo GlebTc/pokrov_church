@@ -9,7 +9,6 @@ import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore
 import Link from 'next/link';
 import EditSchedulePostButton from './edit-schedule-post/EditSchedulePostButton';
 
-
 const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
   user,
   id,
@@ -61,7 +60,10 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
           >
             <DeleteSchedulePostButton />
           </div>
-          <Link href={`/schedule/edit-schedule-post/${id}`} className='flex justify-center items-center gap-4 mt-4'>
+          <Link
+            href={`/schedule/edit-schedule-post/${id}`}
+            className='flex justify-center items-center gap-4 mt-4'
+          >
             <EditSchedulePostButton />
           </Link>
         </div>
