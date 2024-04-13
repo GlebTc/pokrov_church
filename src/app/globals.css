@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-300 md:pt-12 max-w-[1000px] mx-auto;
+  @apply bg-gray-300 md:pt-12 max-w-[1200px] mx-auto;
 }
 
 .button {

@@ -15,7 +15,12 @@ import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore
 import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/ScheduleImageUpload';
 import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
+// Functional Components Imports
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
+  // Initializations
+  const supabaseSchedule = createClientComponentClient();
   const { language } = useLanguageStore();
   const router = useRouter();
   const { createSchedulePost } = useSchedulePostsStore();
@@ -57,7 +62,21 @@ const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
   };
 
   // Cancel Function
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    // Delete stored image prior to cancel
+    if (newSchedulePostFormData?.scheduleImageUrl) {
+      const imageName =
+        newSchedulePostFormData.scheduleImageUrl.split('/').pop() ?? '';
+      const { data, error } = await supabaseSchedule.storage
+        .from('schedule_post_images')
+        .remove([imageName]);
+
+      if (error) {
+        console.error('Error deleting image:', error.message);
+        return;
+      }
+    }
+
     router.push('/schedule');
   };
 

@@ -43,27 +43,25 @@ const NewsMain = ({ user }: { user: any }) => {
         </Link>
       </div>
 
-      <div className='flex flex-col justify-center items-start px-4 md:px-8'>
-        {isLoading ? (
-          <Loading message='Updating Posts...' />
-        ) : (
-          <div>
-            {sortedNewsPosts &&
-              sortedNewsPosts.map((post: NewsPostTypes) => (
-                <IndividualNewsPost
-                  user={user}
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  author={post.author}
-                  content={post.content}
-                  created_at={post.created_at}
-                  newsImageUrl={post.newsImageUrl}
-                />
-              ))}
-          </div>
-        )}
-      </div>
+      {isLoading ? (
+        <Loading message='Updating Posts...' />
+      ) : (
+        <div>
+          {sortedNewsPosts &&
+            sortedNewsPosts.map((post: NewsPostTypes) => (
+              <IndividualNewsPost
+                user={user}
+                key={post.id}
+                id={post.id}
+                title={post.title}
+                author={post.author}
+                content={post.content}
+                created_at={post.created_at}
+                newsImageUrl={post.newsImageUrl}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 };

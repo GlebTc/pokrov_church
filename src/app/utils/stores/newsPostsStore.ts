@@ -18,7 +18,9 @@ export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
   news: [],
   isLoading: true,
   fetchNews: async () => {
-    const { data: news, error } = await supabaseNews.from('news_posts').select('*');
+    const { data: news, error } = await supabaseNews
+      .from('news_posts')
+      .select('*');
     if (news) {
       set({ news });
       set({ isLoading: false });
@@ -40,12 +42,23 @@ export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
     }
   },
   deleteNewsPost: async (id) => {
+    const { data: postData, error: postError } = await supabaseNews
+      .from('news_posts')
+      .select('newsImageUrl')
+      .eq('id', id)
+      .single();
+
+    if (postData && postData.newsImageUrl) {
+      const { data, error } = await supabaseNews.storage
+        .from('news_post_images')
+        .remove([postData.newsImageUrl.split('/').pop()]);
+    }
+
     const { data, error } = await supabaseNews
       .from('news_posts')
       .delete()
       .eq('id', id);
 
-    
     if (data) {
       set({ news: [...data] });
     }
@@ -65,9 +78,12 @@ export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
     }
   },
   getIndividualNewsPost: async (id) => {
-    const { data, error } = await supabaseNews.from('news_posts').select('*').eq('id', id);
+    const { data, error } = await supabaseNews
+      .from('news_posts')
+      .select('*')
+      .eq('id', id);
     if (data) {
       set({ news: [...data] });
     }
-  }
+  },
 }));

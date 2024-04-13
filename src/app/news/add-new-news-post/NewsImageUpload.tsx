@@ -85,7 +85,7 @@ const NewsImageUpload = ({
 
     setNewNewsPostFormData((prevData: NewsPostTypes) => ({
       ...prevData,
-      newsImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/News_post_images/${data?.path}`,
+      newsImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news_post_images/${data?.path}`,
     }));
     setIsUploading(false);
     setAddImageModal(false);

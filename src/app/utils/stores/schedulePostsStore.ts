@@ -44,7 +44,6 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
     }
   },
   deletePost: async (id: string) => {
-
     const { data: postData, error: postError } = await supabaseSchedule
       .from('schedule_posts')
       .select('scheduleImageUrl')
@@ -61,6 +60,7 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
       .from('schedule_posts')
       .delete()
       .eq('id', id);
+
     if (data) {
       set((state) => ({
         schedulePosts: state.schedulePosts.filter((post) => post.id !== id),

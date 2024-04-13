@@ -45,7 +45,7 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
   return (
     <div
       key={id}
-      className='flex flex-col mt-8'
+      className='flex flex-col mt-8 px-8'
     >
       <h3 className='text-xl font-semibold text-center mb-4'>{title}</h3>
       <p className='mb-4 text-center'>
@@ -54,26 +54,6 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
         {useLanguageStore().language === 'en' ? ' by ' : ' от '}
         <span className='text-blue-500'>{author}</span>
       </p>
-
-      <div
-        className={`text-lg text-justify w-full${
-          readMore
-            ? 'h-full transition-h duration-[1000ms]'
-            : 'max-h-[200px] transition-h overflow-hidden duration-[1000ms]'
-        }`}
-        dangerouslySetInnerHTML={{ __html: content }}
-      ></div>
-      <div className='flex justify-end'>
-        <button
-          className='text-blue-500 hover:text-blue-600 duration-300'
-          onClick={toggleReadMore}
-        >
-          {readMore
-            ? `${language === 'en' ? 'Read Less' : 'Скрыть'}`
-            : `${language === 'en' ? 'Read More' : 'Читать далее'}`}
-        </button>
-      </div>
-
       <div className='w-full flex justify-center'>
         {newsImageUrl ? (
           <Image
@@ -92,6 +72,25 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
           </p>
         )}
       </div>
+      <div
+        className={`text-lg text-justify ${
+          readMore
+            ? 'h-full transition-h duration-[1000ms]'
+            : 'max-h-[200px] transition-h overflow-hidden duration-[1000ms]'
+        }`}
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></div>
+      <div className='flex justify-end'>
+        <button
+          className='text-blue-500 hover:text-blue-600 duration-300'
+          onClick={toggleReadMore}
+        >
+          {readMore
+            ? `${language === 'en' ? 'Read Less' : 'Скрыть'}`
+            : `${language === 'en' ? 'Read More' : 'Читать далее'}`}
+        </button>
+      </div>
+
       {user && (
         <div className='flex flex-col md:flex-row justify-center gap-4'>
           <div
@@ -119,5 +118,3 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
 };
 
 export default IndividualNewsPost;
-
-

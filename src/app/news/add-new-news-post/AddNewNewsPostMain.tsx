@@ -17,8 +17,11 @@ import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
 // Functional Components Imports
 import Tiptap from '@/src/app/components/reusable/textEditor/Tiptap';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
+  // Initializations
+  const supabaseNews = createClientComponentClient();
   const { language } = useLanguageStore();
   const router = useRouter();
   const { createNewsPost } = useNewsPostsStore();
@@ -71,7 +74,20 @@ const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
   };
 
   // Cancel Function
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    // Delete stored image prior to cancel
+    if (newNewsPostFormData?.newsImageUrl) {
+      const imageName = newNewsPostFormData.newsImageUrl.split('/').pop() ?? '';
+      const { data, error } = await supabaseNews.storage
+        .from('news_post_images')
+        .remove([imageName]);
+
+      if (error) {
+        console.error('Error deleting image:', error.message);
+        return;
+      }
+    }
+
     router.push('/news');
   };
 
@@ -96,6 +112,19 @@ const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
           newNewsPostFormData={newNewsPostFormData}
         />
       )}
+      <div className='UPLOADED_IMAGE_CONTAINER mb-4'>
+        {newNewsPostFormData.newsImageUrl && (
+          <div className='w-[300px] '>
+            <Image
+              src={newNewsPostFormData.newsImageUrl}
+              alt={newNewsPostFormData.title}
+              width={300}
+              height={300}
+              className='rounded-md object-cover'
+            />
+          </div>
+        )}
+      </div>
       <form className='w-full'>
         <div className='mb-4'>
           <label
@@ -162,19 +191,7 @@ const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
           />
         </div>
       </form>
-      <div className='UPLOADED_IMAGE_CONTAINER mb-4'>
-        {newNewsPostFormData.newsImageUrl && (
-          <div className='w-[300px] '>
-            <Image
-              src={newNewsPostFormData.newsImageUrl}
-              alt={newNewsPostFormData.title}
-              width={300}
-              height={300}
-              className='rounded-md'
-            />
-          </div>
-        )}
-      </div>
+
       <div className='BUTTONS_CONTAINER flex flex-col sm:flex-row gap-4'>
         <button
           className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 duration-300'

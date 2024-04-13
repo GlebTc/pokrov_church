@@ -37,11 +37,12 @@ const NavbarClientComponents = () => {
             : 'Русская Православная Церковь Заграницей (Гамильтон, Онтарио)'}
         </p>
       </Link>
-      <div className='NAVBAR_HERO_CONTAINER w-full mt-8'>
+      <div className='NAVBAR_HERO_CONTAINER w-full mt-8 flex justify-center'>
         <Image
           src={nav_hero_image}
           priority
           alt='Navbar Hero Image | Храм Покрова Пресвятой Богородицы | Holy Protection of the Mother of God Church'
+          className='w-full'
         />
       </div>
       <NavbarDesktopMenu />

@@ -23,8 +23,8 @@ export default function RootLayout({
         <div>
           <Navbar />
           <div className='relative w-full flex flex-col md:flex-row gap-4 justify-around p-4 md:p-8 bg-white'>
-            <section className='min-w-[65%]'>{children}</section>
-            <aside className='min-w-[30%] bg-white'>
+            <section className='min-w-[75%]'>{children}</section>
+            <aside className='min-w-[20%] bg-white'>
               <SideBar />
             </aside>
           </div>
