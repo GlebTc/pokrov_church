@@ -35,7 +35,7 @@ const ScheduleMain = ({ user }: { user: any }) => {
     );
 
   return (
-    <div className='bg-white w-full p-8 flex flex-col gap-4'>
+    <div className='bg-white w-full flex flex-col gap-4'>
       <div className='flex flex-col justify-center items-center md:flex-row md:justify-between md:items-start'>
         <h2 className='text-3xl font-semibold mb-4'>
           {language === 'en' ? 'Schedule' : 'Расписание'}
