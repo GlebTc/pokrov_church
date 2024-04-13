@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { IoClose } from 'react-icons/io5';
 
-const ScheduleModal = ({
-  setIndividualScheduleModal,
-  scheduleImageUrl,
+const NewsImageModal = ({
+  setIndividualNewsModal,
+  newsImageUrl,
 }: {
-  setIndividualScheduleModal: any;
-  scheduleImageUrl: string;
+  setIndividualNewsModal: any;
+  newsImageUrl: string;
 }) => {
   return (
     <div className='fixed inset-0 z-[20] flex justify-center items-center bg-gray-900/90 w-full p-8'>
@@ -14,12 +14,12 @@ const ScheduleModal = ({
         <IoClose
           size={40}
           className='text-white cursor-pointer'
-          onClick={setIndividualScheduleModal}
+          onClick={setIndividualNewsModal}
         />
       </div>
       <div className='relative w-full h-full overflow-auto'>
         <Image
-          src={scheduleImageUrl}
+          src={newsImageUrl}
           alt='Modal Image'
           fill
           className='object-contain'
@@ -29,4 +29,4 @@ const ScheduleModal = ({
   );
 };
 
-export default ScheduleModal;
+export default NewsImageModal;

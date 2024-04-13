@@ -1,50 +1,29 @@
 'use client';
 import { useState } from 'react';
+import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useLanguageStore } from '../../utils/stores/languageStore';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { IoMdCloudUpload } from 'react-icons/io';
 import Image from 'next/image';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
-import { NewsType } from '../../utils/types/newsPostTypes';
+import Loading from '@/src/app/components/reusable/Loading';
 
-/* ==============================TEST============================== 
-
- import ImageUpload from '@/src/app/components/reusable/ImageUpload';
-
- const [addImageModal, setAddImageModal] = useState(false);
-
-  <div className='ADD_IMAGE_BUTTON flex justify-start w-[90dvw] md:w-[70dvw] mt-4'>
-    <button
-      className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 w-[200px] mb-4'
-      onClick={() => setAddImageModal(true)}
-    >
-      {language === 'en' ? 'Add Image' : 'Добавить изображение'}
-    </button>
-    {addImageModal && (
-      <ImageUpload
-        setAddImageModal={setAddImageModal}
-        setFormData={setFormData}
-        formData={formData}
-      />
-    )}
-  </div>
-
- ========================================================================= */
-
-const ImageUpload = ({
+const NewsImageUpload = ({
   setAddImageModal,
-  setFormData,
-  formData,
+  setNewNewsPostFormData,
+  newNewsPostFormData,
 }: {
   setAddImageModal: any;
-  setFormData: any;
-  formData: NewsType;
+  setNewNewsPostFormData: any;
+  newNewsPostFormData: NewsPostTypes;
 }) => {
-  const [image, setImage] = useState<string | null>(null);
   const supabase = createClientComponentClient();
   const { language } = useLanguageStore();
+  const [image, setImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
+  // Handle Image Change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
@@ -55,6 +34,7 @@ const ImageUpload = ({
     }
   };
 
+  // Check if Image File exists in DB and return URL || Modified URL
   const checkFileExists = async (file: File): Promise<string | null> => {
     const { data: fileList, error: fileListError } = await supabase.storage
       .from('news_post_images')
@@ -86,7 +66,9 @@ const ImageUpload = ({
     return null;
   };
 
+  // Handle Image Upload
   const handleUploadImage = async () => {
+    setIsUploading(true);
     if (!file) return;
 
     const modifiedFileName = await checkFileExists(file);
@@ -101,16 +83,17 @@ const ImageUpload = ({
       return;
     }
 
-    setFormData((prevData: NewsType) => ({
+    setNewNewsPostFormData((prevData: NewsPostTypes) => ({
       ...prevData,
-      imageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news_post_images/${data?.path}`,
+      newsImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/News_post_images/${data?.path}`,
     }));
-
+    setIsUploading(false);
     setAddImageModal(false);
   };
 
   return (
     <div className='z-[1000] fixed top-0 left-0 w-screen h-screen bg-gray-800 flex flex-col justify-center items-center'>
+      {isUploading && <Loading message='Uploading Image...' />}
       <div className='absolute top-5 right-5 flex justify-end p-4'>
         <AiFillCloseCircle
           className='text-3xl text-white cursor-pointer'
@@ -139,11 +122,8 @@ const ImageUpload = ({
               className='object-contain'
             />
           ) : (
-            <div className='flex flex-col justify-center items-center p-4 text-center'>
-              <IoMdCloudUpload
-                size={60}
-                className='text-white'
-              />
+            <div className='flex flex-col justify-center items-center p-4 text-center text-white'>
+              <IoMdCloudUpload size={60} />
               <p>
                 {language === 'en'
                   ? 'Click to upload an image'
@@ -170,4 +150,4 @@ const ImageUpload = ({
   );
 };
 
-export default ImageUpload;
+export default NewsImageUpload;

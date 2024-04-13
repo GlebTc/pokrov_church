@@ -1,15 +1,22 @@
 'use client';
 import { useEffect } from 'react';
+import Link from 'next/link';
+
+// Types Imports
 import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
+
+// Stores Imports
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
 
+// Rendering Components Imports
 import Loading from '@/src/app/components/reusable/Loading';
 import IndividualSchedulePost from './IndividualSchedulePost';
-import AddNewSchedulePostButton from '@/src/app/schedule/add-new-schedule-post/AddNewSchedulePostButton';
-import Link from 'next/link';
+import AddNewSchedulePostButton from '@/src/app/schedule/(schedulePostButtons)/AddNewSchedulePostButton';
+
 
 const ScheduleMain = ({ user }: { user: any }) => {
+  // Initialization
   const { language } = useLanguageStore();
   const { schedulePosts, fetchSchedulePosts, isLoading } =
     useSchedulePostsStore();
@@ -19,7 +26,7 @@ const ScheduleMain = ({ user }: { user: any }) => {
     fetchSchedulePosts();
   }, [schedulePosts]);
 
-  // Sort news articles by createdAt timestamp from newest to oldest
+  // Sort schedule posts by createdAt timestamp from newest to oldest
   const sortedSchedulePosts = schedulePosts
     .slice()
     .sort(

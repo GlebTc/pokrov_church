@@ -1,9 +1,9 @@
-import EditSchedulePostMain from '@/src/app/schedule/edit-schedule-post/[postId]/EditSchedulePostMain';
+import EditNewsPostMain from './EditNewsPostMain';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseSchedule = createClient(
+const supabaseNews = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 );
@@ -18,14 +18,14 @@ const page = async ({ params }: { params: any }) => {
   } = await supabase.auth.getUser();
 
   // Fetch Individual Post Data
-  const { data, error } = await supabaseSchedule
-    .from('schedule_posts')
+  const { data, error } = await supabaseNews
+    .from('news_posts')
     .select('*')
-    .eq('id', params.postId);
+    .eq('id', params.newsPostId);
 
   return (
     <div>
-      <EditSchedulePostMain
+      <EditNewsPostMain
         user={user}
         postData={data}
       />

@@ -1,12 +1,18 @@
 'use client';
 import { useState } from 'react';
-import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
-import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
-import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
-import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/ScheduleImageUpload';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+
+// Types Imports
 import { User } from '@supabase/supabase-js';
+import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
+
+// Stores Imports
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
+import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
+
+// Rendering Components Imports
+import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/ScheduleImageUpload';
 import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
 const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {

@@ -1,72 +1,78 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-// Types
-import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
+// Types Imports
 import { User } from '@supabase/supabase-js';
+import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
 
-//Stores
+// Stores Imports
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
-import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
+import { useNewsPostsStore } from '@/src/app/utils/stores/newsPostsStore';
 
-// Components
-import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/ScheduleImageUpload';
-
+// Rendering Components Imports
+import NewsImageUpload from '@/src/app/news/add-new-news-post/NewsImageUpload';
 import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
-const EditSchedulePostMain = ({
-  user,
-  postData,
-}: {
-  user: User | null;
-  postData: any;
-}) => {
+// Functional Components Imports
+import Tiptap from '@/src/app/components/reusable/textEditor/Tiptap';
+
+const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
   const { language } = useLanguageStore();
   const router = useRouter();
-  const { editPost } = useSchedulePostsStore();
+  const { createNewsPost } = useNewsPostsStore();
 
   // States
   const [addImageModal, setAddImageModal] = useState(false);
-  const [schedulePostEditData, setSchedulePostEditData] =
-    useState<SchedulePostTypes>({
-      id: postData[0]?.id,
-      title: postData[0]?.title,
-      author: postData[0]?.author,
-      scheduleImageUrl: postData[0]?.scheduleImageUrl,
+  const [newNewsPostFormData, setNewNewsPostFormData] = useState<NewsPostTypes>(
+    {
+      id: '',
+      title: '',
+      author: user?.email || '',
+      content: '',
+      newsImageUrl: '',
       created_at: new Date().toISOString().slice(0, 10),
-    });
-
+    }
+  );
 
   // Handle Change Function
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setSchedulePostEditData((prevData) => ({
+    setNewNewsPostFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  // handleContentChange Function
+  const handleContentChange = (contentInput: any) => {
+    setNewNewsPostFormData((prevData) => ({
+      ...prevData,
+      content: contentInput,
     }));
   };
 
   // Form Submit Function
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    editPost(schedulePostEditData.id, schedulePostEditData);
-    setSchedulePostEditData({
+    createNewsPost(newNewsPostFormData);
+    setNewNewsPostFormData({
       id: '',
       title: '',
       author: '',
-      scheduleImageUrl: '',
+      content: '',
+      newsImageUrl: '',
       created_at: '',
     });
-    router.push('/schedule');
+    router.push('/news');
   };
 
   // Cancel Function
   const handleCancel = () => {
-    router.push('/schedule');
+    router.push('/news');
   };
 
   // Unauthorized User
@@ -81,15 +87,15 @@ const EditSchedulePostMain = ({
   return (
     <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER inset-0 flex flex-col justify-center items-center'>
       <h2 className='text-2xl font-bold mb-4'>
-        {language === 'en' ? 'Edit Schedule Post' : 'Редактировать расписание'}
+        {language === 'en' ? 'Add New News Post' : 'Добавить новость'}
       </h2>
-      {/* {addImageModal && (
-        <ScheduleImageUpload
+      {addImageModal && (
+        <NewsImageUpload
           setAddImageModal={setAddImageModal}
-          setSchedulePostEditData={setSchedulePostEditData}
-          schedulePostEditData={schedulePostEditData}
+          setNewNewsPostFormData={setNewNewsPostFormData}
+          newNewsPostFormData={newNewsPostFormData}
         />
-      )} */}
+      )}
       <form className='w-full'>
         <div className='mb-4'>
           <label
@@ -102,7 +108,7 @@ const EditSchedulePostMain = ({
             type='date'
             id='created_at'
             name='created_at'
-            value={schedulePostEditData.created_at}
+            value={newNewsPostFormData.created_at}
             onChange={handleChange}
             className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
             required
@@ -119,7 +125,7 @@ const EditSchedulePostMain = ({
             type='text'
             id='title'
             name='title'
-            value={schedulePostEditData.title}
+            value={newNewsPostFormData.title}
             onChange={handleChange}
             className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
             required
@@ -136,19 +142,32 @@ const EditSchedulePostMain = ({
             type='text'
             id='author'
             name='author'
-            value={schedulePostEditData.author}
+            value={newNewsPostFormData.author}
             onChange={handleChange}
             className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
             required
           />
         </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='content'
+            className='block text-sm font-medium'
+          >
+            {language === 'en' ? 'Content' : 'Содержание'}
+          </label>
+
+          <Tiptap
+            content={newNewsPostFormData.content}
+            onChange={(inputContent: any) => handleContentChange(inputContent)}
+          />
+        </div>
       </form>
       <div className='UPLOADED_IMAGE_CONTAINER mb-4'>
-        {schedulePostEditData.scheduleImageUrl && (
+        {newNewsPostFormData.newsImageUrl && (
           <div className='w-[300px] '>
             <Image
-              src={schedulePostEditData.scheduleImageUrl}
-              alt={schedulePostEditData.title}
+              src={newNewsPostFormData.newsImageUrl}
+              alt={newNewsPostFormData.title}
               width={300}
               height={300}
               className='rounded-md'
@@ -167,7 +186,7 @@ const EditSchedulePostMain = ({
           className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 duration-300'
           onClick={handleSubmit}
         >
-          {language === 'en' ? 'Edit Schedule Post' : 'Редактировать расписани'}
+          {language === 'en' ? 'Add New News Post' : 'Добавить новость'}
         </button>
         <button
           className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 duration-300'
@@ -180,4 +199,4 @@ const EditSchedulePostMain = ({
   );
 };
 
-export default EditSchedulePostMain;
+export default AddNewNewsPostMain;

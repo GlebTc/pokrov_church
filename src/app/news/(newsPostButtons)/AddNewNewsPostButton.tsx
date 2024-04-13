@@ -1,7 +1,7 @@
 'use client';
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 
-const AddNewPostButton = () => {
+const AddNewNewsPostButton = () => {
   const { language } = useLanguageStore();
   return (
     <button className='bg-gray-500 hover:bg-gray-400 min-w-[180px] py-1 rounded-md text-white duration-300 shadow-md shadow-gray-400'>
@@ -10,4 +10,4 @@ const AddNewPostButton = () => {
   );
 };
 
-export default AddNewPostButton;
+export default AddNewNewsPostButton;

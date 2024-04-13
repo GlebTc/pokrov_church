@@ -1,122 +1,117 @@
 'use client';
-import Image from 'next/image';
-import { useNewsStore } from '../utils/stores/NewsStore';
-import DeletePostButton from './(postButtons)/DeletePostButton';
-import EditPostButton from './(postButtons)/EditPostButton';
 import { useState } from 'react';
-import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
-import EditPost from './EditPost';
-import { NewsType } from '../utils/types/newsTypes';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const IndividualNewsPost: React.FC<any | NewsType> = ({
+// Types Imports
+import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
+
+// Stores Imports
+import { useNewsPostsStore } from '@/src/app/utils/stores/newsPostsStore';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
+
+// Rendering Components Imports
+import NewsImageModal from '@/src/app/news/NewsImageModal';
+import DeleteNewsPostButton from './(newsPostButtons)/DeleteNewsPostButton';
+import EditNewsPostButton from '@/src/app/news/(newsPostButtons)/EditNewsPostButton';
+
+// Functional Components Imports
+import { formatPostDate } from '@/src/app/utils/dateFormat';
+
+const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
   user,
   id,
   created_at,
   title,
   author,
   content,
-  imageUrl,
-  setDeletedPostIds,
+  newsImageUrl,
 }) => {
-  const { deletePost } = useNewsStore();
-  const [readMore, setReadMore] = useState<boolean>(false);
+  const { deleteNewsPost } = useNewsPostsStore();
+  const [individualNewsModal, setIndividualNewsModal] = useState(false);
+  const [readMore, setReadMore] = useState(false);
   const { language } = useLanguageStore();
-  const [editPostModal, setEditPostModal] = useState(false);
-  const supabase = createClientComponentClient();
 
-  // Function to format the date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = date.toLocaleString('en-US', { month: 'long' });
-    const year = date.getFullYear().toString();
-    return `${month} ${day}, ${year}`;
+  // Handle Delete Function
+  const handleDelete = () => {
+    deleteNewsPost(id);
   };
 
-  const handleDelete = async () => {
-    setDeletedPostIds((prevIds: any) => [...prevIds, id]);
-    const { data, error } = await supabase.storage
-      .from('news_post_images')
-      .remove([imageUrl.split('/').pop()]);
-
-    deletePost(id);
-  };
-
-  const handleEdit = () => {
-    setEditPostModal(true);
-  };
-
+  // Handle Toggle Read More
   const toggleReadMore = () => {
     setReadMore(!readMore);
   };
-  
-  return (
-    <div className='INDIVIDUAL_NEWS_POST_CONTAINER max-w-4xl mx-auto my-8'>
-      {imageUrl && (
-        <div className='w-[200px] '>
-          <Image
-            src={imageUrl}
-            alt={title}
-            width={200}
-            height={200}
-            className='rounded-md'
-          />
-        </div>
-      )}
 
-      <div className='mt-4'>
-        <h3 className='text-3xl font-bold'>{title}</h3>
-        <p className='text-sm text-gray-500 mb-2'>
-          Posted by <span className='text-blue-500'>{author}</span> on{' '}
-          <span className='text-blue-500'>{formatDate(created_at)}</span>
-        </p>
-        <div
-          className={`text-lg text-justify ${
-            readMore
-              ? 'h-full transition-h duration-[1000ms]'
-              : 'max-h-[315px] transition-h overflow-hidden duration-[1000ms]'
-          }`}
-          dangerouslySetInnerHTML={{ __html: content }}
-        ></div>
-        <div className='flex justify-end'>
-          <button
-            className='text-blue-500 hover:text-blue-600 duration-300'
-            onClick={toggleReadMore}
-          >
-            {readMore
-              ? `${language === 'en' ? 'Read Less' : 'Скрыть'}`
-              : `${language === 'en' ? 'Read More' : 'Читать далее'}`}
-          </button>
-        </div>
-        {user && (
-          <div className='flex flex-col justify-center items-center md:flex-row gap-4'>
-            <div
-              onClick={handleDelete}
-              className='flex items-center'
-            >
-              <DeletePostButton />
-            </div>
-            <div
-              onClick={handleEdit}
-              className='flex items-center'
-            >
-              <EditPostButton />
-            </div>
-          </div>
+  return (
+    <div
+      key={id}
+      className='flex flex-col mt-8'
+    >
+      <h3 className='text-xl font-semibold text-center mb-4'>{title}</h3>
+      <p className='mb-4 text-center'>
+        {useLanguageStore().language === 'en' ? 'Posted on ' : 'Опубликовано '}
+        <span className='text-blue-500'>{formatPostDate(created_at)}</span>
+        {useLanguageStore().language === 'en' ? ' by ' : ' от '}
+        <span className='text-blue-500'>{author}</span>
+      </p>
+
+      <div
+        className={`text-lg text-justify w-full${
+          readMore
+            ? 'h-full transition-h duration-[1000ms]'
+            : 'max-h-[200px] transition-h overflow-hidden duration-[1000ms]'
+        }`}
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></div>
+      <div className='flex justify-end'>
+        <button
+          className='text-blue-500 hover:text-blue-600 duration-300'
+          onClick={toggleReadMore}
+        >
+          {readMore
+            ? `${language === 'en' ? 'Read Less' : 'Скрыть'}`
+            : `${language === 'en' ? 'Read More' : 'Читать далее'}`}
+        </button>
+      </div>
+
+      <div className='w-full flex justify-center'>
+        {newsImageUrl ? (
+          <Image
+            onClick={() => setIndividualNewsModal(true)}
+            src={newsImageUrl}
+            alt='Schedule Image'
+            width={500}
+            height={600}
+            className='rounded-md p-1 border-2 object-contain cursor-pointer'
+          />
+        ) : (
+          <p className='text-center text-gray-500'>
+            {useLanguageStore().language === 'en'
+              ? 'No Image Available'
+              : 'Изображение отсутствует'}
+          </p>
         )}
       </div>
-      {editPostModal && (
-        <EditPost
-          setEditPostModal={setEditPostModal}
-          user={user}
-          key={id}
-          id={id}
-          createdAt={created_at}
-          title={title}
-          author={author}
-          content={content}
-          imageUrl={imageUrl}
+      {user && (
+        <div className='flex flex-col md:flex-row justify-center gap-4'>
+          <div
+            className='flex justify-center items-center gap-4 mt-4'
+            onClick={handleDelete}
+          >
+            <DeleteNewsPostButton />
+          </div>
+          <Link
+            href={`/news/edit-news-post/${id}`}
+            className='flex justify-center items-center gap-4 mt-4'
+          >
+            <EditNewsPostButton />
+          </Link>
+        </div>
+      )}
+      {individualNewsModal && (
+        <NewsImageModal
+          setIndividualNewsModal={() => setIndividualNewsModal(false)}
+          newsImageUrl={newsImageUrl}
         />
       )}
     </div>
@@ -124,3 +119,5 @@ const IndividualNewsPost: React.FC<any | NewsType> = ({
 };
 
 export default IndividualNewsPost;
+
+

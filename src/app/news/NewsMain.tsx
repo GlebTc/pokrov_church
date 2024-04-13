@@ -1,26 +1,30 @@
 'use client';
+import { useEffect } from 'react';
+import Link from 'next/link';
+
+// Types Imports
+import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
+
+// Stores Imports
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
-import { useNewsStore } from '../utils/stores/NewsStore';
-import { useEffect, useState } from 'react';
+import { useNewsPostsStore } from '@/src/app/utils/stores/newsPostsStore';
+
+// Rendering Components Imports
+import Loading from '@/src/app/components/reusable/Loading';
 import IndividualNewsPost from '@/src/app/news/IndividualNewsPost';
-import Loading from '../components/reusable/Loading';
-import AddNewPostButton from './(postButtons)/AddNewPostButton';
-import AddNewPost from './AddNewPost';
+import AddNewNewsPostButton from '@/src/app/news/(newsPostButtons)/AddNewNewsPostButton';
 
 const NewsMain = ({ user }: { user: any }) => {
-  const [newPostModal, setNewPostModal] = useState(false)
-  const [deletedPostIds, setDeletedPostIds] = useState<string[]>([]);
   const { language } = useLanguageStore();
-  const { news, fetchNews, isLoading } = useNewsStore();
+  const { news, fetchNews, isLoading } = useNewsPostsStore();
 
+  // Fetch updated news posts on render
   useEffect(() => {
-    setTimeout(() => {
-      fetchNews();
-    }, 1000);
+    fetchNews();
   }, [news]);
 
-  // Sort news articles by createdAt timestamp from newest to oldest
-  const sortedNews = news
+  // Sort news posts by createdAt timestamp from newest to oldest
+  const sortedNewsPosts = news
     .slice()
     .sort(
       (a, b) =>
@@ -34,9 +38,9 @@ const NewsMain = ({ user }: { user: any }) => {
           {language === 'en' ? 'News' : 'Новости'}
         </h2>
 
-        <div onClick={() => setNewPostModal(true)}>
-          {user && <AddNewPostButton />}
-        </div>
+        <Link href='/news/add-new-news-post'>
+          {user && <AddNewNewsPostButton />}
+        </Link>
       </div>
 
       <div className='flex flex-col justify-center items-start px-4 md:px-8'>
@@ -44,29 +48,22 @@ const NewsMain = ({ user }: { user: any }) => {
           <Loading message='Updating Posts...' />
         ) : (
           <div>
-            {sortedNews &&
-              sortedNews.map((post) => (
+            {sortedNewsPosts &&
+              sortedNewsPosts.map((post: NewsPostTypes) => (
                 <IndividualNewsPost
+                  user={user}
                   key={post.id}
                   id={post.id}
-                  created_at={post.created_at}
                   title={post.title}
                   author={post.author}
                   content={post.content}
-                  imageUrl={post.imageUrl}
-                  setDeletedPostIds={setDeletedPostIds}
-                  user={user}
+                  created_at={post.created_at}
+                  newsImageUrl={post.newsImageUrl}
                 />
               ))}
           </div>
         )}
       </div>
-      {newPostModal && (
-        <AddNewPost
-          setNewPostModal={setNewPostModal}
-          user={user}
-        />
-      )}
     </div>
   );
 };

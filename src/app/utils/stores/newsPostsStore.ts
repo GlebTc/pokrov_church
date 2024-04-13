@@ -1,23 +1,20 @@
 import { create } from 'zustand';
-import { NewsType } from '@/src/app/utils/types/newsTypes';
-import { createClient } from '@supabase/supabase-js';
+import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-interface NewsStoreProps {
-  news: NewsType[];
+interface NewsPostsStoreProps {
+  news: NewsPostTypes[];
   fetchNews: () => void;
   isLoading?: boolean;
-  createNewsPost: (newsPost: NewsType) => void;
-  deletePost: (id: string) => void;
-  editPost: (id: string, newsPost: NewsType) => void;
-  getIndividualPost: (id: string) => void;
+  createNewsPost: (newsPost: NewsPostTypes) => void;
+  deleteNewsPost: (id: string) => void;
+  editPost: (id: string, newsPost: NewsPostTypes) => void;
+  getIndividualNewsPost: (id: string) => void;
 }
 
-const supabaseNews = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+const supabaseNews = createClientComponentClient();
 
-export const useNewsStore = create<NewsStoreProps>((set) => ({
+export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
   news: [],
   isLoading: true,
   fetchNews: async () => {
@@ -33,7 +30,7 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
         title: newsPost.title,
         content: newsPost.content,
         author: newsPost.author,
-        imageUrl: newsPost.imageUrl,
+        newsImageUrl: newsPost.newsImageUrl,
         created_at: newsPost.created_at,
       },
     ]);
@@ -42,7 +39,7 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
       set({ news: [...data] });
     }
   },
-  deletePost: async (id) => {
+  deleteNewsPost: async (id) => {
     const { data, error } = await supabaseNews
       .from('news_posts')
       .delete()
@@ -60,14 +57,14 @@ export const useNewsStore = create<NewsStoreProps>((set) => ({
         title: newsPost.title,
         author: newsPost.author,
         content: newsPost.content,
-        imageUrl: newsPost.imageUrl,
+        newsImageUrl: newsPost.newsImageUrl,
       })
       .eq('id', id);
     if (data) {
       set({ news: [...data] });
     }
   },
-  getIndividualPost: async (id) => {
+  getIndividualNewsPost: async (id) => {
     const { data, error } = await supabaseNews.from('news_posts').select('*').eq('id', id);
     if (data) {
       set({ news: [...data] });

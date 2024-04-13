@@ -1,13 +1,22 @@
 'use client';
 import { useState } from 'react';
-import { formatPostDate } from '@/src/app/utils/dateFormat';
-import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
 import Image from 'next/image';
-import ScheduleModal from './ScheduleModal';
-import DeleteSchedulePostButton from './DeleteSchedulePostButton';
-import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
 import Link from 'next/link';
-import EditSchedulePostButton from './edit-schedule-post/EditSchedulePostButton';
+
+// Types Imports
+import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
+
+// Stores Imports
+import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
+import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
+
+// Rendering Components Imports
+import ScheduleImageModal from './ScheduleImageModal';
+import DeleteSchedulePostButton from './(schedulePostButtons)/DeleteSchedulePostButton';
+import EditSchedulePostButton from './(schedulePostButtons)/EditSchedulePostButton';
+
+// Functional Components Imports
+import { formatPostDate } from '@/src/app/utils/dateFormat';
 
 const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
   user,
@@ -32,8 +41,9 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
     >
       <h3 className='text-xl font-semibold text-center mb-4'>{title}</h3>
       <p className='mb-4 text-center'>
-        Posted on{' '}
-        <span className='text-blue-500'>{formatPostDate(created_at)}</span> by{' '}
+        {useLanguageStore().language === 'en' ? 'Posted on ' : 'Опубликовано '}
+        <span className='text-blue-500'>{formatPostDate(created_at)}</span>
+        {useLanguageStore().language === 'en' ? ' by ' : ' от '}
         <span className='text-blue-500'>{author}</span>
       </p>
       <div className='w-full flex justify-center'>
@@ -48,10 +58,15 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
           />
         ) : (
           <p className='text-center text-gray-500'>
-            No Schedule Image Available
+            {useLanguageStore().language === 'en'
+              ? 'No Image Available'
+              : 'Изображение отсутствует'}
           </p>
         )}
       </div>
+
+
+
       {user && (
         <div className='flex flex-col md:flex-row justify-center gap-4'>
           <div
@@ -69,7 +84,7 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
         </div>
       )}
       {individualScheduleModal && (
-        <ScheduleModal
+        <ScheduleImageModal
           setIndividualScheduleModal={() => setIndividualScheduleModal(false)}
           scheduleImageUrl={scheduleImageUrl}
         />
