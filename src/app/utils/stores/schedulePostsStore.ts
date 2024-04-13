@@ -8,8 +8,8 @@ interface SchedulePostsStoreProps {
   isLoading?: boolean;
   createSchedulePost: (schedulePost: SchedulePostTypes) => void;
   deletePost: (id: string) => void;
-  //   editPost: (id: string, schedulePost: SchedulePostTypes) => void;
-  //   getIndividualPost: (id: string) => void;
+  editPost: (id: string, schedulePost: SchedulePostTypes) => void;
+  getIndividualPost: (id: string) => void;
 }
 
 const supabaseSchedule = createClient(
@@ -54,6 +54,32 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
     if (data) {
       set((state) => ({
         schedulePosts: state.schedulePosts.filter((post) => post.id !== id),
+      }));
+    }
+  },
+  getIndividualPost: async (id: string) => {
+    const { data, error } = await supabaseSchedule
+      .from('schedule_posts')
+      .select('*')
+      .eq('id', id);
+    if (data) {
+      return data;
+    }
+  },
+  editPost: async (id: string, schedulePost: SchedulePostTypes) => {
+    const { data, error } = await supabaseSchedule
+      .from('schedule_posts')
+      .update({
+        title: schedulePost.title,
+        author: schedulePost.author,
+        scheduleImageUrl: schedulePost.scheduleImageUrl,
+      })
+      .eq('id', schedulePost.id);
+    if (data) {
+      set((state) => ({
+        schedulePosts: state.schedulePosts.map((post) =>
+          post.id === id ? schedulePost : post
+        ),
       }));
     }
   },

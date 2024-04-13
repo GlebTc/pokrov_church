@@ -6,6 +6,9 @@ import Image from 'next/image';
 import ScheduleModal from './ScheduleModal';
 import DeleteSchedulePostButton from './DeleteSchedulePostButton';
 import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
+import Link from 'next/link';
+import EditSchedulePostButton from './edit-schedule-post/EditSchedulePostButton';
+
 
 const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
   user,
@@ -51,11 +54,16 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
         )}
       </div>
       {user && (
-        <div
-          className='flex justify-center items-center gap-4 mt-4'
-          onClick={handleDelete}
-        >
-          <DeleteSchedulePostButton />
+        <div className='flex flex-col md:flex-row justify-center gap-4'>
+          <div
+            className='flex justify-center items-center gap-4 mt-4'
+            onClick={handleDelete}
+          >
+            <DeleteSchedulePostButton />
+          </div>
+          <Link href={`/schedule/edit-schedule-post/${id}`} className='flex justify-center items-center gap-4 mt-4'>
+            <EditSchedulePostButton />
+          </Link>
         </div>
       )}
       {individualScheduleModal && (
