@@ -14,6 +14,8 @@ import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import NewsImageModal from '@/src/app/news/NewsImageModal';
 import DeleteNewsPostButton from './(newsPostButtons)/DeleteNewsPostButton';
 import EditNewsPostButton from '@/src/app/news/(newsPostButtons)/EditNewsPostButton';
+import { FaEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
 
 // Functional Components Imports
 import { formatPostDate } from '@/src/app/utils/dateFormat';
@@ -46,8 +48,31 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
   return (
     <div
       key={id}
-      className='flex flex-col mt-8 px-8'
+      className='INDIVIDUAL_NEWS_POST flex flex-col mt-8 px-8 relative'
     >
+      {user && (
+        <div className='EDIT_AND_DELETE_BUTTONS absolute top-5 right-5 flex gap-1'>
+          <Link
+            className='EDIT_BUTTON'
+            href={`/news/edit-news-post/${id}`}
+          >
+            <FaEdit
+              className='EDIT_ICON text-green-500 hover:text-green-700 cursor-pointer hover:scale-105 duration-300'
+              size={25}
+            />
+          </Link>
+          <div
+            className='DELETE_BUTTON'
+            onClick={handleDelete}
+          >
+            <MdDelete
+              className='DELETE_ICON text-red-500 hover:text-red-700 cursor-pointer hover:scale-105 duration-300'
+              size={25}
+            />
+          </div>
+        </div>
+      )}
+
       <h3 className='text-xl font-semibold text-center mb-4'>{title}</h3>
       <p className='mb-4 text-center'>
         {useLanguageStore().language === 'en' ? 'Posted on ' : 'Опубликовано '}
@@ -66,11 +91,12 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
             className='rounded-md p-1 border-2 object-contain cursor-pointer'
           />
         ) : (
-          <p className='text-center text-gray-500'>
-            {useLanguageStore().language === 'en'
-              ? 'No Image Available'
-              : 'Изображение отсутствует'}
-          </p>
+          // <p className='text-center text-gray-500'>
+          //   {useLanguageStore().language === 'en'
+          //     ? 'No Image Available'
+          //     : 'Изображение отсутствует'}
+          // </p>
+          <p></p>
         )}
       </div>
       <div
@@ -92,22 +118,6 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
         </button>
       </div>
 
-      {user && (
-        <div className='flex flex-col md:flex-row justify-center gap-4'>
-          <div
-            className='flex justify-center items-center gap-4 mt-4'
-            onClick={handleDelete}
-          >
-            <DeleteNewsPostButton />
-          </div>
-          <Link
-            href={`/news/edit-news-post/${id}`}
-            className='flex justify-center items-center gap-4 mt-4'
-          >
-            <EditNewsPostButton />
-          </Link>
-        </div>
-      )}
       {individualNewsModal && (
         <NewsImageModal
           setIndividualNewsModal={() => setIndividualNewsModal(false)}

@@ -2,18 +2,20 @@
 
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Toolbar from "./Toolbar";
+import Toolbar from './Toolbar';
+import Underline from '@tiptap/extension-underline';
+import ListItem from '@tiptap/extension-list-item';
+import BulletList from '@tiptap/extension-bullet-list';
+import OrderedList from '@tiptap/extension-ordered-list';
 
 const Tiptap = ({ onChange, content }: any) => {
-
   const handleChange = (newContent: string) => {
     onChange(newContent);
   };
 
-
   const editor = useEditor({
     content: content,
-    extensions: [StarterKit],
+    extensions: [StarterKit, Underline, ListItem, OrderedList, BulletList],
     editorProps: {
       attributes: {
         class:
@@ -25,13 +27,15 @@ const Tiptap = ({ onChange, content }: any) => {
     },
   });
 
-
-
-  return <div>
-    <Toolbar editor={editor} content={content} />
-    <EditorContent editor={editor} />
-  </div>;
+  return (
+    <div className='PARENT_TIPTAP_RENDERING_COMPONENT'>
+      <Toolbar
+        editor={editor}
+        content={content}
+      />
+      <EditorContent editor={editor} />
+    </div>
+  );
 };
 
 export default Tiptap;
-

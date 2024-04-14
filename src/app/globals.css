@@ -10,3 +10,21 @@ body {
   @apply bg-gray-500 hover:bg-gray-400 rounded-md text-white py-2 w-full font-bold text-center duration-300 shadow-md shadow-gray-400;
 }
 
+.INDIVIDUAL_NEWS_POST ul {
+  @apply list-disc ml-12;
+}
+
+.INDIVIDUAL_NEWS_POST ol {
+  @apply list-decimal ml-12;
+}
+
+/* Tiptap Styles */
+.tiptap ul {
+  list-style: disc;
+  margin-left: 1.5em;
+}
+
+.tiptap ol {
+  list-style: decimal;
+  margin-left: 1.5em;
+}
