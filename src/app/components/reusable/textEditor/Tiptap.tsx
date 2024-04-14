@@ -17,7 +17,7 @@ const Tiptap = ({ onChange, content }: any) => {
     editorProps: {
       attributes: {
         class:
-          'mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800 bg-white max-h-[45dvh] overflow-y-auto',
+          'mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800 bg-white max-h-[35dvh] overflow-y-auto',
       },
     },
     onUpdate: ({ editor }) => {

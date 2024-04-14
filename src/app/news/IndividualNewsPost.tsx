@@ -17,6 +17,7 @@ import EditNewsPostButton from '@/src/app/news/(newsPostButtons)/EditNewsPostBut
 
 // Functional Components Imports
 import { formatPostDate } from '@/src/app/utils/dateFormat';
+import deleteImage from '@/src/app/utils/deleteImage';
 
 const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
   user,

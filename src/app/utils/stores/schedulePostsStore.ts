@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import deleteImage from '@/src/app/utils/deleteImage';
+import deleteScheduleImage from '@/src/app/utils/deleteImage';
 
 interface SchedulePostsStoreProps {
   schedulePosts: SchedulePostTypes[];
@@ -52,7 +52,7 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
       .single();
 
     if (postData && postData.scheduleImageUrl) {
-      deleteImage({ imageUrl: postData.scheduleImageUrl });
+      deleteScheduleImage({ imageUrl: postData.scheduleImageUrl, table_name: 'schedule_post_images'});
     }
 
     const { data, error } = await supabaseSchedule

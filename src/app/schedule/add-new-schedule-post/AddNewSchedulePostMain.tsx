@@ -17,7 +17,7 @@ import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
 // Functional Components Imports
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import deleteImage from '@/src/app/utils/deleteImage';
+import deleteScheduleImage from '@/src/app/utils/deleteImage';
 
 const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
   // Initializations
@@ -66,7 +66,10 @@ const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
   const handleCancel = async () => {
     // Delete stored image prior to cancel
     if (newSchedulePostFormData?.scheduleImageUrl) {
-      await deleteImage({ imageUrl: newSchedulePostFormData.scheduleImageUrl });
+      await deleteScheduleImage({
+        imageUrl: newSchedulePostFormData.scheduleImageUrl,
+        table_name: 'schedule_post_images',
+      });
     }
 
     router.push('/schedule');

@@ -31,6 +31,7 @@ const IndividualSchedulePost: React.FC<any | SchedulePostTypes> = ({
 
   // Handle Delete Function
   const handleDelete = () => {
+    
     deletePost(id);
   };
 

@@ -18,6 +18,7 @@ import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 // Functional Components Imports
 import Tiptap from '@/src/app/components/reusable/textEditor/Tiptap';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import deleteImage from '@/src/app/utils/deleteImage';
 
 const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
   // Initializations
@@ -77,15 +78,10 @@ const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
   const handleCancel = async () => {
     // Delete stored image prior to cancel
     if (newNewsPostFormData?.newsImageUrl) {
-      const imageName = newNewsPostFormData.newsImageUrl.split('/').pop() ?? '';
-      const { data, error } = await supabaseNews.storage
-        .from('news_post_images')
-        .remove([imageName]);
-
-      if (error) {
-        console.error('Error deleting image:', error.message);
-        return;
-      }
+      await deleteImage({
+        imageUrl: newNewsPostFormData.newsImageUrl,
+        table_name: 'news_post_images',
+      });
     }
 
     router.push('/news');

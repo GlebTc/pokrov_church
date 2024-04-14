@@ -7,7 +7,7 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { IoMdCloudUpload } from 'react-icons/io';
 import Image from 'next/image';
 import Loading from '@/src/app/components/reusable/Loading';
-import deleteImage from '@/src/app/utils/deleteImage';
+import deleteScheduleImage from '@/src/app/utils/deleteImage';
 
 const EditScheduleImageUpload = ({
   setAddImageModal,
@@ -23,7 +23,6 @@ const EditScheduleImageUpload = ({
   const [image, setImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-
 
   // Handle Image Change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +70,7 @@ const EditScheduleImageUpload = ({
   const handleUploadImage = async () => {
     setIsUploading(true);
     if (schedulePostEditData?.scheduleImageUrl) {
-        deleteImage({ imageUrl: schedulePostEditData.scheduleImageUrl });
+      deleteScheduleImage({ imageUrl: schedulePostEditData.scheduleImageUrl, table_name: 'schedule_post_images'});
     }
     if (!file) return;
 

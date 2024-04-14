@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import deleteImage from '@/src/app/utils/deleteImage';
 
 interface NewsPostsStoreProps {
   news: NewsPostTypes[];
@@ -49,9 +50,10 @@ export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
       .single();
 
     if (postData && postData.newsImageUrl) {
-      const { data, error } = await supabaseNews.storage
-        .from('news_post_images')
-        .remove([postData.newsImageUrl.split('/').pop()]);
+      await deleteImage({
+        imageUrl: postData.newsImageUrl,
+        table_name: 'news_post_images',
+      });
     }
 
     const { data, error } = await supabaseNews
