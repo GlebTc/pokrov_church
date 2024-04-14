@@ -36,7 +36,7 @@ const MainPage = () => {
       <Image
         src={main_image_one}
         alt='Main Image One | Храм Покрова Пресвятой Богородицы | Holy Protection of the Mother of God Church'
-        className='rounded-md p-1 border-2'
+        className='rounded-md p-1 border-2 w-full'
       />
       <Link
         href='schedule'

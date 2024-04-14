@@ -15,7 +15,7 @@ const NavbarClientComponents = () => {
   };
   const { language } = useLanguageStore();
   return (
-    <div className='NAVBAR_HEADER_CONTAINER relative pt-16 text-center border-b-4'>
+    <div className='NAVBAR_HEADER_CONTAINER relative pt-16 text-center'>
       <div
         className='NAVBAR_MENU_BUTTON_CONTAINER absolute right-4 top-4  bg-gray-500 text-white rounded-md p-1 shadow-md shadow-gray-400 cursor-pointer hover:bg-gray-400 duration-300 md:hidden'
         onClick={handleMobileMenu}

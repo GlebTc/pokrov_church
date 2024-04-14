@@ -4,8 +4,7 @@
 
 ## Fixes to Implement
 
-- The Our Parish Desktop Menu will activate on hover on the subMenu, should only hover when onEnter on the Menu Item.
-- Structure proper image delete and patch process for db
+- Structure proper imagend patch process for db
 - The logout button I have in the navbar has to be moved as it creates a Multiple GoTrueClient error when I render pages that take in user data (posts, schedule)
 
 ## Architecture

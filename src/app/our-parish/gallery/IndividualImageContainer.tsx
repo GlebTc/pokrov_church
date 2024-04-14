@@ -12,7 +12,7 @@ const IndividualImageContainer = ({ imageUrl }: { imageUrl: string }) => {
         onClick={() => setIndividualGalleryImageModal(true)}
         src={`${imageUrl}`}
         alt='Church'
-        width={250}
+        width={270}
         height={300}
         loading='lazy'
         quality={50}

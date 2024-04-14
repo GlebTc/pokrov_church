@@ -40,8 +40,8 @@ const NavbarDesktopMenu = () => {
             <ul
               className={`absolute top-8 left-0 w-48 bg-gray-500 text-white rounded-b-md text-left ${
                 activeSubMenu === index
-                  ? ' z-[100] opacity-100 transition-opacity duration-[500ms]'
-                  : ' z-[100] opacity-0 transition-opacity duration-[500ms]'
+                  ? 'z-[100] opacity-100 transition-opacity duration-[500ms]'
+                  : 'opacity-0 transition-opacity duration-[500ms]'
               }`}
             >
               {item.subMenu.map((subItem, subIndex) => (

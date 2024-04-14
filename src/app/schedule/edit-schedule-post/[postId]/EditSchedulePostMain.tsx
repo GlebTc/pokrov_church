@@ -12,8 +12,7 @@ import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 import { useSchedulePostsStore } from '@/src/app/utils/stores/schedulePostsStore';
 
 // Components
-import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/ScheduleImageUpload';
-
+import EditScheduleImageUpload from '@/src/app/schedule/edit-schedule-post/EditScheduleImageUpload';
 import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
 const EditSchedulePostMain = ({
@@ -28,7 +27,7 @@ const EditSchedulePostMain = ({
   const { editPost } = useSchedulePostsStore();
 
   // States
-  const [addImageModal, setAddImageModal] = useState(false);
+  const [editImageModal, setEditImageModal] = useState(false);
   const [schedulePostEditData, setSchedulePostEditData] =
     useState<SchedulePostTypes>({
       id: postData[0]?.id,
@@ -83,13 +82,13 @@ const EditSchedulePostMain = ({
       <h2 className='text-2xl font-bold mb-4'>
         {language === 'en' ? 'Edit Schedule Post' : 'Редактировать расписание'}
       </h2>
-      {/* {addImageModal && (
-        <ScheduleImageUpload
-          setAddImageModal={setAddImageModal}
+      {editImageModal && (
+        <EditScheduleImageUpload
+          setAddImageModal={setEditImageModal}
           setSchedulePostEditData={setSchedulePostEditData}
           schedulePostEditData={schedulePostEditData}
         />
-      )} */}
+      )}
       <form className='w-full'>
         <div className='mb-4'>
           <label
@@ -159,9 +158,9 @@ const EditSchedulePostMain = ({
       <div className='BUTTONS_CONTAINER flex flex-col sm:flex-row gap-4'>
         <button
           className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 duration-300'
-          onClick={() => setAddImageModal(true)}
+          onClick={() => setEditImageModal(true)}
         >
-          {language === 'en' ? 'Add Image' : 'Добавить изображение'}
+          {language === 'en' ? 'Edit Image' : 'Редактировать изображение'}
         </button>
         <button
           className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 duration-300'

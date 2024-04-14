@@ -11,11 +11,13 @@ const OurParish = () => {
       <h2 className='text-3xl font-semibold mb-8'>
         {language === 'en' ? 'Our Parish' : 'Наш Приход'}
       </h2>
-      <Image
-        src={our_parish}
-        alt='Our Parish | Наш Приход'
-        className='rounded-md p-1 border-2'
-      />
+      <div className='w-full flex justify-center'>
+        <Image
+          src={our_parish}
+          alt='Our Parish | Наш Приход'
+          className='rounded-md p-1 border-2'
+        />
+      </div>
       <OurParishLink />
     </div>
   );
