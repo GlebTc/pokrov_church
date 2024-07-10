@@ -48,10 +48,10 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
   return (
     <div
       key={id}
-      className='INDIVIDUAL_NEWS_POST flex flex-col mt-8 px-8 relative'
+      className='INDIVIDUAL_NEWS_POST flex flex-col mt-8 px-8 relative border-2 rounded-md'
     >
       {user && (
-        <div className='EDIT_AND_DELETE_BUTTONS absolute top-5 right-5 flex gap-1'>
+        <div className='EDIT_AND_DELETE_BUTTONS absolute top-1 right-1 flex gap-1'>
           <Link
             className='EDIT_BUTTON'
             href={`/news/edit-news-post/${id}`}
@@ -73,7 +73,7 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
         </div>
       )}
 
-      <h3 className='text-xl font-semibold text-center mb-4'>{title}</h3>
+      <h3 className='text-xl md:text-3xl font-semibold md:font-bold text-center my-6'>{title}</h3>
       <p className='mb-4 text-center'>
         {useLanguageStore().language === 'en' ? 'Posted on ' : 'Опубликовано '}
         <span className='text-blue-500'>{formatPostDate(created_at)}</span>
@@ -109,12 +109,12 @@ const IndividualNewsPost: React.FC<any | NewsPostTypes> = ({
       ></div>
       <div className='flex justify-end'>
         <button
-          className='text-blue-500 hover:text-blue-600 duration-300'
+          className='text-blue-500 hover:text-blue-600 duration-300 m-1'
           onClick={toggleReadMore}
         >
           {readMore
             ? `${language === 'en' ? 'Read Less' : 'Скрыть'}`
-            : `${language === 'en' ? 'Read More' : 'Читать далее'}`}
+            : `${language === 'en' ? 'Read More...' : 'Читать далее...'}`}
         </button>
       </div>
 
