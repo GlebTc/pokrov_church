@@ -1,5 +1,5 @@
 'use client';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
@@ -12,7 +12,7 @@ const LoggedInComponent = ({
   user: User;
   language: string;
 }) => {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const router = useRouter();
   const handleSignOut = async () => {
     try {

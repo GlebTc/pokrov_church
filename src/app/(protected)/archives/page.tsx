@@ -1,10 +1,8 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
 const Archives = async () => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   const {
     data: { user },

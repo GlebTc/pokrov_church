@@ -1,5 +1,5 @@
 'use client';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import LoggedInComponent from './LoggedInComponent';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { User } from '@supabase/supabase-js';
 import { useLanguageStore } from '@/src/app/utils/stores/languageStore';
 
 const LoginComponent = ({ user }: { user: User | null }) => {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const router = useRouter();
   const { language } = useLanguageStore();
   const [loginCredentials, setLoginCredentials] = useState({
@@ -32,8 +32,6 @@ const LoginComponent = ({ user }: { user: User | null }) => {
     router.refresh();
   };
 
-
-
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSignIn();
@@ -47,7 +45,6 @@ const LoginComponent = ({ user }: { user: User | null }) => {
           user={user}
           language={language}
         />
-
       </>
     );
 

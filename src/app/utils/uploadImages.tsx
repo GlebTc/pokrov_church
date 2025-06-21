@@ -19,64 +19,67 @@ This component will uplaodImages based on file and table_name to supabase storag
 
 */
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 
-const uploadImages = async (file: File, table_name: string) => {
-  // Initialize supabase client
-  const supabase = createClientComponentClient();
+const uploadImages = async ({
+  file,
+  table_name,
+}: {
+  file: File;
+  table_name: string;
+}) => {
+  const supabase = createClient();
+  try {
+    // Check if Image File exists in DB and return URL || Modified URL
+    const checkFileExists = async (file: File): Promise<string | null> => {
+      const { data: fileList, error: fileListError } = await supabase.storage
+        .from(`${table_name}`)
+        .list('');
 
-  console.log(`Uploading image to ${table_name}`);
+      if (fileList && fileListError === null) {
+        const fileExists = fileList.find((item) => item.name === file.name);
 
-  // Check if file exists in supabase database.  If the file already exists in database, modify the file name to add _001, _002, _003, etc.  Once the check is complete, the checkFileExists functions returns the modified file name or null.
-
-  const checkFileExists = async (file: File): Promise<string | null> => {
-    const { data: fileList, error: fileListError } = await supabase.storage
-      .from(`${table_name}`)
-      .list('');
-
-    if (fileList && fileListError === null) {
-      const fileExists = fileList.find((item) => item.name === file.name);
-
-      if (fileExists) {
-        const fileExt = file.name.split('.').pop();
-        let modifiedFileName: string | null = null;
-        let index = 1;
-        do {
-          modifiedFileName = `${file.name.replace(`.${fileExt}`, '')}_${index
-            .toString()
-            .padStart(3, '0')}.${fileExt}`;
-          const fileWithIndexExists = fileList.find(
-            (item) => item.name === modifiedFileName
-          );
-          if (fileWithIndexExists) {
-            index++;
-          } else {
-            return modifiedFileName;
-          }
-        } while (modifiedFileName);
+        if (fileExists) {
+          const fileExt = file.name.split('.').pop();
+          let modifiedFileName: string | null = null;
+          let index = 1;
+          do {
+            modifiedFileName = `${file.name.replace(`.${fileExt}`, '')}_${index
+              .toString()
+              .padStart(3, '0')}.${fileExt}`;
+            const fileWithIndexExists = fileList.find(
+              (item) => item.name === modifiedFileName
+            );
+            if (fileWithIndexExists) {
+              index++;
+            } else {
+              return modifiedFileName;
+            }
+          } while (modifiedFileName);
+        }
       }
-    }
 
-    return null;
-  };
+      return null;
+    };
 
-  // Handle Image Upload
-  const handleUploadImage = async () => {
-    // Check if file exists in database
     const modifiedFileName = await checkFileExists(file);
-
     const uploadFileName = modifiedFileName || file.name;
 
-    // Upload file to database
     const { data, error } = await supabase.storage
       .from(`${table_name}`)
       .upload(uploadFileName, file);
-    const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${table_name}/${data?.path}`;
-    console.log(`Image ${imageUrl} uploaded to ${table_name}`);
-    return imageUrl;
-  };
 
-  handleUploadImage();
+    if (error) {
+      console.error('Error uploading file:', error);
+      return;
+    }
+
+    const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${table_name}/${data?.path}`;
+    return imageUrl;
+  } catch (error) {
+    console.error('Error in uploadImages:', error);
+    return;
+  }
 };
 
 export default uploadImages;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { User, UserAttributes } from '@supabase/supabase-js';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 
 interface UserStoreProps {
   user: UserAttributes | null;
@@ -18,8 +18,11 @@ export const useUserStore = create<UserStoreProps>((set) => ({
       console.error('Email and password are required.');
       return;
     }
-    const supabase = createClientComponentClient();
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) {
       console.error('Error signing in:', error.message);
       return;
@@ -29,7 +32,7 @@ export const useUserStore = create<UserStoreProps>((set) => ({
     }
   },
   signOutUser: async () => {
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     await supabase.auth.signOut();
     set({ user: null });
   },

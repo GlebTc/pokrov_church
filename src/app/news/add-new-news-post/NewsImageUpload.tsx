@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import { useLanguageStore } from '../../utils/stores/languageStore';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { IoMdCloudUpload } from 'react-icons/io';
@@ -17,7 +17,7 @@ const NewsImageUpload = ({
   setNewNewsPostFormData: any;
   newNewsPostFormData: NewsPostTypes;
 }) => {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const { language } = useLanguageStore();
   const [image, setImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);

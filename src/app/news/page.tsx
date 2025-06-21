@@ -1,10 +1,8 @@
 import NewsMain from './NewsMain';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 
 const News = async () => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   const {
     data: { user },

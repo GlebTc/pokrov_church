@@ -20,8 +20,7 @@ This component deletes an imagefile from supabase database based on imageURL and
 
 */
 
-
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 
 const deleteImage = async ({
   imageUrl,
@@ -30,7 +29,7 @@ const deleteImage = async ({
   imageUrl: string;
   table_name: string;
 }) => {
-  const supabaseSchedule = createClientComponentClient();
+  const supabaseSchedule = createClient();
   try {
     // Split the imageUrl string into an array and get the last element
     const imageName = imageUrl.split('/').pop() ?? '';

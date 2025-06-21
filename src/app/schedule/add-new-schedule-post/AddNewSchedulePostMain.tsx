@@ -16,12 +16,12 @@ import ScheduleImageUpload from '@/src/app/schedule/add-new-schedule-post/Schedu
 import Unauthorized from '@/src/app/components/reusable/Unauthorized';
 
 // Functional Components Imports
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import deleteScheduleImage from '@/src/app/utils/deleteImage';
 
 const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
   // Initializations
-  const supabaseSchedule = createClientComponentClient();
+  const supabaseSchedule = createClient();
   const { language } = useLanguageStore();
   const router = useRouter();
   const { createSchedulePost } = useSchedulePostsStore();
@@ -85,35 +85,16 @@ const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
   }
 
   return (
-    <div className='ADD_NEW_POST_MAIN_FORM_CONTAINER inset-0 flex flex-col justify-center items-center'>
-      <h2 className='text-2xl font-bold mb-4'>
-        {language === 'en' ? 'Add New Schedule Post' : 'Добавить Расписание'}
+    <div className='ADD_NEW_SCHEDULE_POST_MAIN_CONTAINER flex flex-col gap-8'>
+      <h2 className='ADD_NEW_SCHEDULE_POST_MAIN_HEADING_CONTAINER text-3xl font-semibold mb-8'>
+        {language === 'en'
+          ? 'Add New Schedule Post'
+          : 'Добавить новое расписание'}
       </h2>
-      {addImageModal && (
-        <ScheduleImageUpload
-          setAddImageModal={setAddImageModal}
-          setNewSchedulePostFormData={setNewSchedulePostFormData}
-          newSchedulePostFormData={newSchedulePostFormData}
-        />
-      )}
-      <form className='w-full'>
-        <div className='mb-4'>
-          <label
-            htmlFor='created_at'
-            className='block text-sm font-medium'
-          >
-            {language === 'en' ? 'Created At' : 'Дата создания'}
-          </label>
-          <input
-            type='date'
-            id='created_at'
-            name='created_at'
-            value={newSchedulePostFormData.created_at}
-            onChange={handleChange}
-            className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
-            required
-          />
-        </div>
+      <form
+        onSubmit={handleSubmit}
+        className='ADD_NEW_SCHEDULE_POST_FORM_CONTAINER flex flex-col gap-4'
+      >
         <div className='mb-4'>
           <label
             htmlFor='title'
@@ -148,6 +129,23 @@ const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
             required
           />
         </div>
+        <div className='mb-4'>
+          <label
+            htmlFor='created_at'
+            className='block text-sm font-medium'
+          >
+            {language === 'en' ? 'Date' : 'Дата'}
+          </label>
+          <input
+            type='date'
+            id='created_at'
+            name='created_at'
+            value={newSchedulePostFormData.created_at}
+            onChange={handleChange}
+            className='mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800'
+            required
+          />
+        </div>
       </form>
       <div className='UPLOADED_IMAGE_CONTAINER mb-4'>
         {newSchedulePostFormData.scheduleImageUrl && (
@@ -162,26 +160,33 @@ const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
           </div>
         )}
       </div>
-      <div className='BUTTONS_CONTAINER flex flex-col sm:flex-row gap-4'>
+      <div className='BUTTONS_CONTAINER flex gap-4'>
         <button
-          className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 duration-300'
           onClick={() => setAddImageModal(true)}
+          className='bg-blue-500 text-white rounded-md px-4 py-2 font-bold hover:bg-blue-600 duration-300'
         >
           {language === 'en' ? 'Add Image' : 'Добавить изображение'}
         </button>
         <button
-          className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 duration-300'
           onClick={handleSubmit}
+          className='bg-green-500 text-white rounded-md px-4 py-2 font-bold hover:bg-green-600 duration-300'
         >
-          {language === 'en' ? 'Add New Schedule Post' : 'Добавить расписание'}
+          {language === 'en' ? 'Submit' : 'Отправить'}
         </button>
         <button
-          className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500 duration-300'
           onClick={handleCancel}
+          className='bg-red-500 text-white rounded-md px-4 py-2 font-bold hover:bg-red-600 duration-300'
         >
-          {language === 'en' ? 'Cancel' : 'Отменить'}
+          {language === 'en' ? 'Cancel' : 'Отмена'}
         </button>
       </div>
+      {addImageModal && (
+        <ScheduleImageUpload
+          setAddImageModal={setAddImageModal}
+          setNewSchedulePostFormData={setNewSchedulePostFormData}
+          newSchedulePostFormData={newSchedulePostFormData}
+        />
+      )}
     </div>
   );
 };

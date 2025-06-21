@@ -9,12 +9,12 @@ import Loading from '@/src/app/components/reusable/Loading';
 import IndividualImageContainer from '@/src/app/our-parish/gallery/IndividualImageContainer';
 
 // Functional Components Imports
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 
 const Gallery = () => {
   // Initializations
   const { language } = useLanguageStore();
-  const supabaseImages = createClientComponentClient();
+  const supabaseImages = createClient();
 
   // States
   const [imagesArary, setImagesArray] = useState<string[]>([]);
@@ -81,23 +81,23 @@ const Gallery = () => {
     fetchImages();
   }, []);
 
+  if (loading) {
+    return <Loading message='Loading Images...' />;
+  }
+
   return (
-    <div>
-      <h2 className='text-3xl font-semibold mb-8'>
+    <div className='GALLERY_MAIN_CONTAINER flex flex-col gap-8'>
+      <h2 className='GALLERY_MAIN_HEADING_CONTAINER text-3xl font-semibold mb-8'>
         {language === 'en' ? 'Gallery' : 'Галерея'}
       </h2>
-      {loading ? (
-        <Loading message={'Loading Images'} />
-      ) : (
-        <div className='flex justify-center items-center flex-wrap gap-4'>
-          {imagesArary.map((imageUrl, index) => (
-            <IndividualImageContainer
-              key={index}
-              imageUrl={imageUrl}
-            />
-          ))}
-        </div>
-      )}
+      <div className='GALLERY_IMAGES_CONTAINER grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+        {imagesArary.map((imageUrl, index) => (
+          <IndividualImageContainer
+            key={index}
+            imageUrl={imageUrl}
+          />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { NewsPostTypes } from '@/src/app/utils/types/newsPostTypes';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import deleteImage from '@/src/app/utils/deleteImage';
 
 interface NewsPostsStoreProps {
@@ -13,7 +13,7 @@ interface NewsPostsStoreProps {
   getIndividualNewsPost: (id: string) => void;
 }
 
-const supabaseNews = createClientComponentClient();
+const supabaseNews = createClient();
 
 export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
   news: [],

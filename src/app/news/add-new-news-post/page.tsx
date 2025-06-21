@@ -1,19 +1,16 @@
 import AddNewNewsPostMain from '@/src/app/news/add-new-news-post/AddNewNewsPostMain';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 
 const page = async () => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-
   return (
     <div>
-      <AddNewNewsPostMain user={user}/>
+      <AddNewNewsPostMain user={user} />
     </div>
   );
 };

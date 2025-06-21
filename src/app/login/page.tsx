@@ -1,10 +1,8 @@
 import LoginComponent from './LoginComponent';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 
 const page = async () => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   const {
     data: { user },

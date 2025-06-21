@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { SchedulePostTypes } from '@/src/app/utils/types/schedulePostTypes';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import deleteScheduleImage from '@/src/app/utils/deleteImage';
 
 interface SchedulePostsStoreProps {
@@ -13,7 +13,7 @@ interface SchedulePostsStoreProps {
   getIndividualPost: (id: string) => void;
 }
 
-const supabaseSchedule = createClientComponentClient();
+const supabaseSchedule = createClient();
 
 export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
   schedulePosts: [],
@@ -86,11 +86,11 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
         author: schedulePost.author,
         scheduleImageUrl: schedulePost.scheduleImageUrl,
       })
-      .eq('id', schedulePost.id);
+      .eq('id', id);
     if (data) {
       set((state) => ({
         schedulePosts: state.schedulePosts.map((post) =>
-          post.id === id ? schedulePost : post
+          post.id === id ? { ...post, ...schedulePost } : post
         ),
       }));
     }

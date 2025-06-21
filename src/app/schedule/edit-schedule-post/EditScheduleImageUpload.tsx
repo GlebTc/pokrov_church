@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { SchedulePostTypes } from '../../utils/types/schedulePostTypes';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/src/app/utils/supabase';
 import { useLanguageStore } from '../../utils/stores/languageStore';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { IoMdCloudUpload } from 'react-icons/io';
@@ -18,7 +18,7 @@ const EditScheduleImageUpload = ({
   setSchedulePostEditData: any;
   schedulePostEditData: SchedulePostTypes;
 }) => {
-  const supabaseSchedule = createClientComponentClient();
+  const supabaseSchedule = createClient();
   const { language } = useLanguageStore();
   const [image, setImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -148,7 +148,7 @@ const EditScheduleImageUpload = ({
             className='bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-500 w-[300px] mt-4'
             onClick={handleUploadImage}
           >
-            {language === 'en' ? 'Edit Image' : 'Редактировать изображение'}
+            {language === 'en' ? 'Add Image' : 'Добавить изображение'}
           </button>
         </>
       )}

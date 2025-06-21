@@ -2,6 +2,6 @@
 
 module.exports = {
   images: {
-    domains: ['hoatmkxnmfmskjdudpyn.supabase.co'],
+    domains: ['txabaxnmvlpyymzvlptn.supabase.co'],
   },
 };

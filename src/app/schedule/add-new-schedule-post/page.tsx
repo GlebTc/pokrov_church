@@ -1,19 +1,16 @@
 import AddNewSchedulePostMain from './AddNewSchedulePostMain';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 
 const page = async () => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-
   return (
     <div>
-      <AddNewSchedulePostMain user={user}/>
+      <AddNewSchedulePostMain user={user} />
     </div>
   );
 };

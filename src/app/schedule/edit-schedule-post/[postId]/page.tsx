@@ -1,6 +1,5 @@
-import EditSchedulePostMain from '@/src/app/schedule/edit-schedule-post/[postId]/EditSchedulePostMain';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import EditSchedulePostMain from './EditSchedulePostMain';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseSchedule = createClient(
@@ -9,8 +8,7 @@ const supabaseSchedule = createClient(
 );
 
 const page = async ({ params }: { params: any }) => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   // Fetch User Information
   const {

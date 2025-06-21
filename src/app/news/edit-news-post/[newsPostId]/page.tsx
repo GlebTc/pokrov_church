@@ -1,6 +1,5 @@
 import EditNewsPostMain from './EditNewsPostMain';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createServerSupabaseClient } from '@/src/app/utils/supabase';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseNews = createClient(
@@ -9,8 +8,7 @@ const supabaseNews = createClient(
 );
 
 const page = async ({ params }: { params: any }) => {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const supabase = createServerSupabaseClient();
 
   // Fetch User Information
   const {
