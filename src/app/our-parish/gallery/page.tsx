@@ -20,12 +20,12 @@ const Gallery = () => {
   const [imagesArary, setImagesArray] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Fetch Images from schedule_post_images and news_post_images
+  // Fetch Images from schedule-post-images and news-post-images
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const { data: scheduleImages, error: scheduleError } =
-          await supabaseImages.storage.from('schedule_post_images').list();
+          await supabaseImages.storage.from('schedule-post-images').list();
         // filter out 0 index item
         if (scheduleImages) {
           const scheduleImagesArray = scheduleImages.filter(
@@ -38,14 +38,14 @@ const Gallery = () => {
             (imageName: string) => {
               return (
                 process.env.NEXT_PUBLIC_SUPABASE_URL +
-                '/storage/v1/object/public/schedule_post_images/' +
+                '/storage/v1/object/public/schedule-post-images/' +
                 imageName
               );
             }
           );
 
           const { data: newsImages, error: newsError } =
-            await supabaseImages.storage.from('news_post_images').list();
+            await supabaseImages.storage.from('news-post-images').list();
           // filter out 0 index item
           if (newsImages) {
             const newsImagesArray = newsImages.filter(
@@ -58,7 +58,7 @@ const Gallery = () => {
               (imageName: string) => {
                 return (
                   process.env.NEXT_PUBLIC_SUPABASE_URL +
-                  '/storage/v1/object/public/news_post_images/' +
+                  '/storage/v1/object/public/news-post-images/' +
                   imageName
                 );
               }

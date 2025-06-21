@@ -52,7 +52,7 @@ export const useNewsPostsStore = create<NewsPostsStoreProps>((set) => ({
     if (postData && postData.newsImageUrl) {
       await deleteImage({
         imageUrl: postData.newsImageUrl,
-        table_name: 'news_post_images',
+        table_name: 'news-post-images',
       });
     }
 

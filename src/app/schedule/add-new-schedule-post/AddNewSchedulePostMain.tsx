@@ -68,7 +68,7 @@ const AddNewSchedulePostMain = ({ user }: { user: User | null }) => {
     if (newSchedulePostFormData?.scheduleImageUrl) {
       await deleteScheduleImage({
         imageUrl: newSchedulePostFormData.scheduleImageUrl,
-        table_name: 'schedule_post_images',
+        table_name: 'schedule-post-images',
       });
     }
 

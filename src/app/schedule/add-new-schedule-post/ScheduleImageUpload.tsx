@@ -37,7 +37,7 @@ const ScheduleImageUpload = ({
   // Check if Image File exists in DB and return URL || Modified URL
   const checkFileExists = async (file: File): Promise<string | null> => {
     const { data: fileList, error: fileListError } = await supabase.storage
-      .from('schedule_post_images')
+      .from('schedule-post-images')
       .list('');
 
     if (fileList && fileListError === null) {
@@ -75,7 +75,7 @@ const ScheduleImageUpload = ({
     const uploadFileName = modifiedFileName || file.name;
 
     const { data, error } = await supabase.storage
-      .from('schedule_post_images')
+      .from('schedule-post-images')
       .upload(uploadFileName, file);
 
     if (error) {
@@ -85,7 +85,7 @@ const ScheduleImageUpload = ({
 
     setNewSchedulePostFormData((prevData: SchedulePostTypes) => ({
       ...prevData,
-      scheduleImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/schedule_post_images/${data?.path}`,
+      scheduleImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/schedule-post-images/${data?.path}`,
     }));
     setIsUploading(false);
     setAddImageModal(false);

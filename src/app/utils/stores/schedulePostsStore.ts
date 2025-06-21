@@ -52,7 +52,10 @@ export const useSchedulePostsStore = create<SchedulePostsStoreProps>((set) => ({
       .single();
 
     if (postData && postData.scheduleImageUrl) {
-      deleteScheduleImage({ imageUrl: postData.scheduleImageUrl, table_name: 'schedule_post_images'});
+      deleteScheduleImage({
+        imageUrl: postData.scheduleImageUrl,
+        table_name: 'schedule-post-images',
+      });
     }
 
     const { data, error } = await supabaseSchedule

@@ -80,7 +80,7 @@ const AddNewNewsPostMain = ({ user }: { user: User | null }) => {
     if (newNewsPostFormData?.newsImageUrl) {
       await deleteImage({
         imageUrl: newNewsPostFormData.newsImageUrl,
-        table_name: 'news_post_images',
+        table_name: 'news-post-images',
       });
     }
 

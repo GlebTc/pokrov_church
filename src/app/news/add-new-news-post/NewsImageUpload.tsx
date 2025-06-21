@@ -37,7 +37,7 @@ const NewsImageUpload = ({
   // Check if Image File exists in DB and return URL || Modified URL
   const checkFileExists = async (file: File): Promise<string | null> => {
     const { data: fileList, error: fileListError } = await supabase.storage
-      .from('news_post_images')
+      .from('news-post-images')
       .list('');
 
     if (fileList && fileListError === null) {
@@ -75,7 +75,7 @@ const NewsImageUpload = ({
     const uploadFileName = modifiedFileName || file.name;
 
     const { data, error } = await supabase.storage
-      .from('news_post_images')
+      .from('news-post-images')
       .upload(uploadFileName, file);
 
     if (error) {
@@ -85,7 +85,7 @@ const NewsImageUpload = ({
 
     setNewNewsPostFormData((prevData: NewsPostTypes) => ({
       ...prevData,
-      newsImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news_post_images/${data?.path}`,
+      newsImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/news-post-images/${data?.path}`,
     }));
     setIsUploading(false);
     setAddImageModal(false);

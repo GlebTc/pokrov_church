@@ -38,7 +38,7 @@ const EditScheduleImageUpload = ({
   // Check if Image File exists in DB and return URL || Modified URL
   const checkFileExists = async (file: File): Promise<string | null> => {
     const { data: fileList, error: fileListError } =
-      await supabaseSchedule.storage.from('schedule_post_images').list('');
+      await supabaseSchedule.storage.from('schedule-post-images').list('');
 
     if (fileList && fileListError === null) {
       const fileExists = fileList.find((item) => item.name === file.name);
@@ -70,7 +70,10 @@ const EditScheduleImageUpload = ({
   const handleUploadImage = async () => {
     setIsUploading(true);
     if (schedulePostEditData?.scheduleImageUrl) {
-      deleteScheduleImage({ imageUrl: schedulePostEditData.scheduleImageUrl, table_name: 'schedule_post_images'});
+      deleteScheduleImage({
+        imageUrl: schedulePostEditData.scheduleImageUrl,
+        table_name: 'schedule-post-images',
+      });
     }
     if (!file) return;
 
@@ -78,7 +81,7 @@ const EditScheduleImageUpload = ({
     const uploadFileName = modifiedFileName || file.name;
 
     const { data, error } = await supabaseSchedule.storage
-      .from('schedule_post_images')
+      .from('schedule-post-images')
       .upload(uploadFileName, file);
 
     if (error) {
@@ -88,7 +91,7 @@ const EditScheduleImageUpload = ({
 
     setSchedulePostEditData((prevData: SchedulePostTypes) => ({
       ...prevData,
-      scheduleImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/schedule_post_images/${data?.path}`,
+      scheduleImageUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/schedule-post-images/${data?.path}`,
     }));
     setIsUploading(false);
     setAddImageModal(false);
